@@ -23,6 +23,7 @@ async function ajaxListAllModels2()
     /* use the fetched data to change the content of the webpage */
     function updateWebpage(response)
     {
+        console.log(response);
         let product_string = "";
         if (response.length > 0)
         {
