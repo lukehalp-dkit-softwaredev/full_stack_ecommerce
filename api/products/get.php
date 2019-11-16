@@ -1,7 +1,7 @@
 <?php
     require_once "../../php/configuration.php";
 
-    $response = null;
+    $response = new stdClass();
 
     if (isset($_GET['product'])) {
         $product_id = ltrim(rtrim(filter_input(INPUT_GET, "product", FILTER_SANITIZE_NUMBER_INT)));
