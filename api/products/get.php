@@ -26,6 +26,7 @@
             $response->apiVersion = "1.0";
             $response->data = $result;
         } else {
+            $error = new stdClass();
             $error->code = 404;
             $error->msg = "Product not found, check product id and try again.";
 
@@ -36,6 +37,7 @@
         
     } else {
         // Product id not in url
+        $error = new stdClass();
         $error->code = 400;
         $error->msg = "Malformed URL, please check url and try again.";
 
