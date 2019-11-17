@@ -283,7 +283,7 @@
                             </select>
                         </div>
                         <div class="sorting mr-auto">
-                            <select id="ag_products_per_page" onchange="setParam('pageLimit', this.value);shop_page_number = 0;displayProducts()">
+                            <select id="ag_products_per_page" onchange="setParam('pageLimit', this.value)">
                                 <option value="12">Show 12</option>
                                 <option value="27">Show 27</option>
                                 <option value="57">Show 57</option>
@@ -294,7 +294,7 @@
                     <!-- End Filter Bar -->
                     <!-- Start Best Seller -->
                     <section class="lattest-product-area pb-40 category-list">
-                        <div id="product_list" style="opacity: 0" class="row"></div>
+                        <div id="product_list" style="opacity:0" class="row"></div>
                     </section>
                     <!-- End Best Seller -->
                     <!-- Start Filter Bar -->

@@ -1,4 +1,3 @@
-let test;
 let max_page;
 let url;
 window.onload = displayProducts();
@@ -106,14 +105,10 @@ async function displayProducts()
 }
 $(document).on("click", '.disable_page_button', function (event) {
     event.preventDefault();
-//    console.log(this.text);
-//    goToPage(parseInt(this.text) - 1);
 });
 $(document).on("click", '.page-btn', function (event) {
     event.preventDefault();
     goNewPage(this.text - 1);
-//    console.log(this.text);
-//    goToPage(parseInt(this.text) - 1);
 });
 function goNewPage(pageNumber)
 {
