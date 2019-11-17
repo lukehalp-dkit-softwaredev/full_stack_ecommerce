@@ -564,7 +564,7 @@
 			width: 40px;
 			line-height: 40px;
 			text-align: center;
-			background: #828bb2;
+			background: $primary-color3;
 			border-radius: 50%;
 			display: inline-block;
 			color: #fff;
@@ -640,7 +640,7 @@
 	padding-bottom: 120px;
 	margin-top: 60px;
 	.nav.nav-tabs{
-		background: #e8f0f2;
+		background: $primary-color3;
 		text-align: center;
 		display: block;
 		border: none;
@@ -677,9 +677,9 @@
 		}
 	}
 	.tab-content{
-		border-left: 1px solid #eee;
-		border-right: 1px solid #eee;
-		border-bottom: 1px solid #eee;
+		border-left: 1px solid $primary-color3;
+		border-right: 1px solid $primary-color3;
+		border-bottom: 1px solid $primary-color3;
 		padding: 30px;
 		.total_rate{
 			.box_total{

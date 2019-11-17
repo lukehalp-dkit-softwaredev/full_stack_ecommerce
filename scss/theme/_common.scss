@@ -1145,7 +1145,7 @@
 
 .main-categories{
 	a{
-	color:$black;
+	color: $white;
 	}
 }
 
@@ -1380,7 +1380,7 @@
 	}
 	.main-categories {
 		padding: 0 20px;
-		background: $white;
+		background: $primary-bg-color;
 		box-shadow: 0 10px 10px rgba(153, 153, 153, 0.1);
 	}
 	.main-nav-list {

@@ -31,7 +31,7 @@
 	@include transition();
 	.main_menu {
 		.main_box {
-			background: #fff;
+			background: $primary-bg-color;
 			margin: 0px auto 0;
 			max-width: 1200px;
 			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
