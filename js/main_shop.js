@@ -1,5 +1,6 @@
 let max_page;
 let url;
+let test;
 window.onload = displayProducts();
 async function displayProducts()
 {
@@ -32,16 +33,17 @@ async function displayProducts()
     /* use the fetched data to change the content of the webpage */
     function updateWebpage(response)
     {
+        test = response;
         let product_string = "";
         let pages_string = "";
-        if (response[0].length > 0)
+        if (response.data.products.length > 0)
         {
-            for (let i = 0; i < response[0].length; i++)
+            for (let i = 0; i < response.data.products.length; i++)
             {
-                product_string += '<!-- product --><div class="col-lg-4 col-md-6"><div class="single-product" title="' + response[0][i].product_id + '"><img class="img-fluid" src="' + response[0][i].image_url + '" alt=""><div class="product-details"><h6>' + response[0][i].name + '</h6><div class="price"><h6>' + response[0][i].unit_price + '€</h6></div><div class="prd-bottom"><a href="" class="social-info"><span class="ti-bag"></span><p class="hover-text">add to bag</p></a><a href="" class="social-info"><span class="lnr lnr-heart"></span><p class="hover-text">Wishlist</p></a><a href="" class="social-info"><span class="lnr lnr-sync"></span><p class="hover-text">compare</p></a><a href="" class="social-info"><span class="lnr lnr-move"></span><p class="hover-text">view more</p></a></div></div></div></div>';
+                product_string += '<!-- product --><div class="col-lg-4 col-md-6"><div class="single-product" title="' + response.data.products[i].product_id + '"><img class="img-fluid" src="' + response.data.products[i].image_url + '" alt=""><div class="product-details"><h6>' + response.data.products[i].name + '</h6><div class="price"><h6>' + response.data.products[i].unit_price + '€</h6></div><div class="prd-bottom"><a href="" class="social-info"><span class="ti-bag"></span><p class="hover-text">add to bag</p></a><a href="" class="social-info"><span class="lnr lnr-heart"></span><p class="hover-text">Wishlist</p></a><a href="" class="social-info"><span class="lnr lnr-sync"></span><p class="hover-text">compare</p></a><a href="" class="social-info"><span class="lnr lnr-move"></span><p class="hover-text">view more</p></a></div></div></div></div>';
             }
             let pages_elements = document.getElementsByClassName("pagination");
-            max_page = Math.ceil(response[1].product_count / shop_products_per_page);
+            max_page = Math.ceil(response.data.prod_count.count / shop_products_per_page);
             for (let i = 0; i < pages_elements.length; i++)
             {
                 let disable_class = "";
