@@ -38,7 +38,7 @@ async function displayProducts()
         {
             for (let i = 0; i < response[0].length; i++)
             {
-                product_string += '<!-- product --><div class="col-lg-4 col-md-6"><div class="single-product"><img class="img-fluid" src="' + response[0][i].image_url + '" alt=""><div class="product-details"><h6>' + response[0][i].name + '</h6><div class="price"><h6>' + response[0][i].unit_price + '€</h6></div><div class="prd-bottom"><a href="" class="social-info"><span class="ti-bag"></span><p class="hover-text">add to bag</p></a><a href="" class="social-info"><span class="lnr lnr-heart"></span><p class="hover-text">Wishlist</p></a><a href="" class="social-info"><span class="lnr lnr-sync"></span><p class="hover-text">compare</p></a><a href="" class="social-info"><span class="lnr lnr-move"></span><p class="hover-text">view more</p></a></div></div></div></div>';
+                product_string += '<!-- product --><div class="col-lg-4 col-md-6"><div class="single-product" title="' + response[0][i].product_id + '"><img class="img-fluid" src="' + response[0][i].image_url + '" alt=""><div class="product-details"><h6>' + response[0][i].name + '</h6><div class="price"><h6>' + response[0][i].unit_price + '€</h6></div><div class="prd-bottom"><a href="" class="social-info"><span class="ti-bag"></span><p class="hover-text">add to bag</p></a><a href="" class="social-info"><span class="lnr lnr-heart"></span><p class="hover-text">Wishlist</p></a><a href="" class="social-info"><span class="lnr lnr-sync"></span><p class="hover-text">compare</p></a><a href="" class="social-info"><span class="lnr lnr-move"></span><p class="hover-text">view more</p></a></div></div></div></div>';
             }
             let pages_elements = document.getElementsByClassName("pagination");
             max_page = Math.ceil(response[1].product_count / shop_products_per_page);
@@ -49,7 +49,7 @@ async function displayProducts()
                 {
                     disable_class = "disable_page_button";
                 }
-                pages_string = '<a href="#" onclick="goNewPage(' + (parseInt(shop_page_number) - 1) + ')" class="prev-arrow ' + disable_class + '"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>';
+                pages_string = '<a href="#" onclick="goNewPage(' + (parseInt(shop_page_number) - 1) + ')" class="prev-arrow ' + disable_class + '" style="margin-left: -1px" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>';
                 let page_start = shop_page_number - 2; //to keep the current page always in the middle of selection
                 /* If the current page is at the start then set it to start 
                  * from very first page, not keeping current page in the middle of selection*/
@@ -109,6 +109,9 @@ $(document).on("click", '.disable_page_button', function (event) {
 $(document).on("click", '.page-btn', function (event) {
     event.preventDefault();
     goNewPage(this.text - 1);
+});
+$(document).on("click", '.single-product', function (event) {
+    location.href = "single-product.html?product=" + this.title;
 });
 function goNewPage(pageNumber)
 {
