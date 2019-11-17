@@ -49,7 +49,7 @@ async function displayProducts()
                 {
                     disable_class = "disable_page_button";
                 }
-                pages_string = '<a href="#" onclick="goNewPage(' + (parseInt(shop_page_number) - 1) + ')" class="prev-arrow ' + disable_class + '" style="margin-left: -1px" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>';
+                pages_string = '<a href="" title="' + (parseInt(shop_page_number) - 1) + '" class="prev-arrow ag-page-selector-arrow ' + disable_class + '" style="margin-left: -1px" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>';
                 let page_start = shop_page_number - 2; //to keep the current page always in the middle of selection
                 /* If the current page is at the start then set it to start 
                  * from very first page, not keeping current page in the middle of selection*/
@@ -69,30 +69,30 @@ async function displayProducts()
                  * so you can go back to first page from any page.*/
                 if (shop_page_number > 1)
                 {
-                    pages_string += '<a href="#" class="page-btn" >1</a>';
-                    pages_string += '<a href="#" class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>';
+                    pages_string += '<a href="" class="page-btn" >1</a>';
+                    pages_string += '<a href="" class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>';
                 }
                 for (let j = page_start; j < iterate_for; j++)
                 {
                     if (shop_page_number == j) //== works but === doesn't. rip
                     {
-                        pages_string += '<a href="#" class="active">' + (j + 1) + '</a>';
+                        pages_string += '<a href="" class="active">' + (j + 1) + '</a>';
                     } else
                     {
-                        pages_string += '<a href="#" class="page-btn">' + (j + 1) + '</a>';
+                        pages_string += '<a href="" class="page-btn">' + (j + 1) + '</a>';
                     }
                 }
                 if (max_page > 3 && shop_page_number < max_page - 2)
                 {
-                    pages_string += '<a href="#" class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>';
-                    pages_string += '<a href="#"  class="page-btn" >' + max_page + '</a>';
+                    pages_string += '<a href="" class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>';
+                    pages_string += '<a href=""  class="page-btn" >' + max_page + '</a>';
                 }
                 disable_class = "";
                 if (shop_page_number >= max_page - 1)
                 {
                     disable_class = "disable_page_button";
                 }
-                pages_string += '<a href="#" onclick="goNewPage(' + (parseInt(shop_page_number) + 1) + ')" class="next-arrow ' + disable_class + '"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>';
+                pages_string += '<a href="" title="' + (parseInt(shop_page_number) + 1) + '" class="next-arrow ag-page-selector-arrow ' + disable_class + '"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>';
                 pages_elements[i].innerHTML = pages_string;
             }
         } else
@@ -109,6 +109,10 @@ $(document).on("click", '.disable_page_button', function (event) {
 $(document).on("click", '.page-btn', function (event) {
     event.preventDefault();
     goNewPage(this.text - 1);
+});
+$(document).on("click", '.ag-page-selector-arrow', function (event) {
+    event.preventDefault();
+    goNewPage(parseInt(this.title));
 });
 $(document).on("click", '.single-product', function (event) {
     location.href = "single-product.html?product=" + this.title;
