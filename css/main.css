@@ -981,6 +981,12 @@ h1, h2, h3, h4, h5, h6 {
   .form-select .nice-select::after {
     right: 20px; }
 
+.disable_page_button {
+  background-color: #767676 !important; }
+  .disable_page_button:hover {
+    background: #767676 !important;
+    cursor: not-allowed; }
+
 .is-sticky .header_area .main_menu .main_box {
   max-width: 100%;
   margin-top: 0;
@@ -5792,5 +5798,18 @@ label {
   .footer-text a,
   .footer-text i {
     color: #ffba00; }
+
+#product_list {
+  -webkit-transition-duration: 0.5s, 0s;
+  -moz-transition-duration: 0.5s, 0s;
+  -o-transition-duration: 0.5s, 0s;
+  transition-duration: 0.5s, 0s; }
+
+.show_nice {
+  opacity: 1 !important;
+  -webkit-transition-duration: 0.5s, 0s;
+  -moz-transition-duration: 0.5s, 0s;
+  -o-transition-duration: 0.5s, 0s;
+  transition-duration: 0.5s, 0s; }
 
 /*# sourceMappingURL=main.css.map */
