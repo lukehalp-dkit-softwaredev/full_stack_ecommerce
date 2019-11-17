@@ -8,15 +8,15 @@ async function displayProducts()
     let shop_products_per_page = document.getElementById("ag_products_per_page").value;
     url = new URL(window.location.href);
     let urlParams = (url).searchParams;
-    if (urlParams.get("pageNumber"))
+    if (urlParams.get("pagenumber"))
     {
-        shop_page_number = urlParams.get("pageNumber");
+        shop_page_number = urlParams.get("pagenumber");
     }
-    if (urlParams.get("pageLimit"))
+    if (urlParams.get("pagelimit"))
     {
-        shop_products_per_page = urlParams.get("pageLimit");
+        shop_products_per_page = urlParams.get("pagelimit");
     }
-    let call_url = "php/ajax_get_all_products_on_page.php?pageNumber=" + shop_page_number + "&pageLimit=" + shop_products_per_page;   /* name of file to send request to */
+    let call_url = "php/ajax_get_all_products_on_page.php?pagenumber=" + shop_page_number + "&pagelimit=" + shop_products_per_page;   /* name of file to send request to */
     try
     {
         const response = await fetch(call_url,
@@ -123,13 +123,13 @@ function goNewPage(pageNumber)
 {
     if (pageNumber >= 0 && pageNumber < max_page)
     {
-        url.searchParams.set("pageNumber", pageNumber);
+        url.searchParams.set("pagenumber", pageNumber);
         let pageLimit = $("#ag_products_per_page").val();
-        if (url.searchParams.get("pageLimit"))
+        if (url.searchParams.get("pagelimit"))
         {
-            pageLimit = url.searchParams.get("pageLimit");
+            pageLimit = url.searchParams.get("pagelimit");
         }
-        url.searchParams.set("pageLimit", pageLimit);
+        url.searchParams.set("pagelimit", pageLimit);
         window.location.href = url;
     }
 }
