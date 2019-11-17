@@ -276,14 +276,14 @@
                     <!-- Start Filter Bar -->
                     <div class="filter-bar d-flex flex-wrap align-items-center">
                         <div class="sorting">
-                            <select>
-                                <option value="1">Default sorting</option>
-                                <option value="1">Default sorting</option>
-                                <option value="1">Default sorting</option>
+                            <select onchange="setParam('sorting', this.value)">
+                                <option value="default">Default sorting</option>
+                                <option value="priceasc">Price Ascending</option>
+                                <option value="pricedesc">Price Descending</option>
                             </select>
                         </div>
                         <div class="sorting mr-auto">
-                            <select id="ag_products_per_page" onchange="setParam('pageLimit', this.value)">
+                            <select id="ag_products_per_page" onchange="setParam('pagelimit', this.value)">
                                 <option value="12">Show 12</option>
                                 <option value="27">Show 27</option>
                                 <option value="57">Show 57</option>

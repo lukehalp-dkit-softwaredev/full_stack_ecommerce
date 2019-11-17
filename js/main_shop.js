@@ -4,6 +4,7 @@ let test;
 window.onload = displayProducts();
 async function displayProducts()
 {
+    let product_sorting;
     let product_min_price;
     let product_max_price;
     let shop_page_number = 0;
@@ -26,7 +27,11 @@ async function displayProducts()
     {
         product_max_price = urlParams.get("maxprice");
     }
-    let call_url = "php/ajax_get_all_products_on_page.php?pagenumber=" + shop_page_number + "&pagelimit=" + shop_products_per_page + "&minprice=" + product_min_price + "&maxprice=" + product_max_price;   /* name of file to send request to */
+    if (urlParams.get("sorting"))
+    {
+        product_sorting = urlParams.get("sorting");
+    }
+    let call_url = "php/ajax_get_all_products_on_page.php?pagenumber=" + shop_page_number + "&pagelimit=" + shop_products_per_page + "&minprice=" + product_min_price + "&maxprice=" + product_max_price + "&sorting=" + product_sorting;   /* name of file to send request to */
     try
     {
         const response = await fetch(call_url,

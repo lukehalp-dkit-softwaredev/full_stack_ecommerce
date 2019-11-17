@@ -18,7 +18,7 @@ if ($pageLimit != $default_pageLimit && $pageLimit != 27 && $pageLimit != 57) {
 if (empty($pageLimit)) {
     $pageLimit = $default_pageLimit;
 }
-$name = ltrim(rtrim(filter_input(INPUT_GET, "name", FILTER_SANITIZE_STRING)));
+$name = trim(filter_input(INPUT_GET, "name", FILTER_SANITIZE_STRING));
 if ($name != null and $name != False) {
     $query .= "AND name LIKE :name ";
 }
@@ -29,6 +29,15 @@ if ($minprice != null and $minprice != False) {
 $maxprice = filter_input(INPUT_GET, "maxprice", FILTER_SANITIZE_NUMBER_FLOAT);
 if ($maxprice != null and $maxprice != False) {
     $query .= "AND unit_price < :maxprice ";
+}
+$sorting = trim(filter_input(INPUT_GET, "sorting", FILTER_SANITIZE_STRING));
+strtolower($sorting);
+if (!empty($sorting)) {
+    if ($sorting == "priceasc") {
+        $query .= "ORDER BY unit_price ASC ";
+    } else if ($sorting == "pricedesc") {
+        $query .= "ORDER BY unit_price DESC ";
+    }
 }
 //pagestart is exclusive
 $pageStart = $page * $pageLimit;
