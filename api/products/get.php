@@ -11,7 +11,7 @@
         $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
 
         /* Perform Query */
-        $query = "SELECT product_id, name, description, image_url, unit_price FROM products WHERE product_id = :product_id";
+        $query = "SELECT product_id, name, description, image_url, unit_price, category_id FROM products WHERE product_id = :product_id";
         $statement = $dbConnection->prepare($query);
         $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
         $statement->execute();
@@ -33,6 +33,8 @@
 
             $response->apiVersion = "1.0";
             $response->error = $error;
+
+            http_response_code(404);
         }
 
         
@@ -44,6 +46,8 @@
 
         $response->apiVersion = "1.0";
         $response->error = $error;
+
+        http_response_code(400);
     }
 
     echo json_encode($response);

@@ -3,9 +3,9 @@
 
     $response = new stdClass();
 
-    if (isset($_GET['name']) || isset($_GET['minprice']) || isset($_GET['maxprice'])) {
+    if (isset($_GET['name']) || isset($_GET['minprice']) || isset($_GET['maxprice']) || isset($_GET['category'])) {
 
-        $query = "SELECT product_id, name, description, image_url, unit_price FROM products WHERE 1=1 ";
+        $query = "SELECT product_id, name, description, image_url, unit_price, catergory_id FROM products WHERE 1=1 ";
 
         $name = ltrim(rtrim(filter_input(INPUT_GET, "name", FILTER_SANITIZE_STRING)));
         if($name != null and $name != False) {
@@ -22,6 +22,11 @@
             $query .= "AND unit_price < :maxprice ";
         }
         
+        $category = filter_input(INPUT_GET, "category", FILTER_SANITIZE_NUMBER_INT);
+        if($category != null and $category != False) {
+            $query .= "AND category_id = :category_id ";
+        }
+
         /* Connect to the database */
         $dbConnection = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUsername, $dbPassword);
         $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
@@ -58,6 +63,8 @@
 
             $response->apiVersion = "1.0";
             $response->error = $error;
+
+            http_response_code(404);
         }
 
         
@@ -69,6 +76,8 @@
 
         $response->apiVersion = "1.0";
         $response->error = $error;
+
+        http_response_code(400);
     }
 
     echo json_encode($response);

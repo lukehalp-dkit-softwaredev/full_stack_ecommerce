@@ -33,6 +33,8 @@
 
             $response->apiVersion = "1.0";
             $response->error = $error;
+
+            http_response_code(404);
         }
 
         
@@ -44,6 +46,8 @@
 
         $response->apiVersion = "1.0";
         $response->error = $error;
+
+        http_response_code(400);
     }
 
     echo json_encode($response);

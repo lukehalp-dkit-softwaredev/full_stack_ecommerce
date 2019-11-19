@@ -33,7 +33,9 @@
                     description TEXT NOT NULL,
                     unit_price FLOAT NOT NULL,
                     image_url VARCHAR(255) NULL,
-                    stock INT NOT NULL);"
+                    stock INT NOT NULL,
+                    category_id INT NOT NULL,
+                    FOREIGN KEY (category_id) REFERENCES categories(category_id));"
                 . "CREATE TABLE IF NOT EXISTS users(
                     user_id INT NOT NULL PRIMARY KEY,
                     email VARCHAR(320) NOT NULL,
@@ -52,7 +54,13 @@
                     quantity INT NOT NULL,
                     PRIMARY KEY (order_id, product_id),
                     FOREIGN KEY (order_id) REFERENCES orders(order_id),
-                    FOREIGN KEY (product_id) REFERENCES products(product_id));";
+                    FOREIGN KEY (product_id) REFERENCES products(product_id));"
+                . "CREATE TABLE IF NOT EXISTS categories(
+                    category_id INT NOT NULL PRIMARY KEY,
+                    name VARCHAR(64) NOT NULL);"
+                /* Alter table statements for existing tables */
+                . "ALTER TABLE products ADD category_id INT NOT NULL;
+                    ALTER TABLE products ADD FOREIGN KEY (category_id) REFERENCES categories(category_id);";
         $statement = $dbConnection->prepare($query);
         $statement->execute();
 
