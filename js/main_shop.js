@@ -4,6 +4,7 @@ let test;
 window.onload = displayProducts();
 async function displayProducts()
 {
+    let category_id;
     let product_sorting;
     let product_min_price;
     let product_max_price;
@@ -31,7 +32,11 @@ async function displayProducts()
     {
         product_sorting = urlParams.get("sorting");
     }
-    let call_url = "php/ajax_get_all_products_on_page.php?pagenumber=" + shop_page_number + "&pagelimit=" + shop_products_per_page + "&minprice=" + product_min_price + "&maxprice=" + product_max_price + "&sorting=" + product_sorting;   /* name of file to send request to */
+    if (urlParams.get("category_id"))
+    {
+        category_id = urlParams.get("category_id");
+    }
+    let call_url = "php/ajax_get_all_products_on_page.php?pagenumber=" + shop_page_number + "&pagelimit=" + shop_products_per_page + "&minprice=" + product_min_price + "&maxprice=" + product_max_price + "&sorting=" + product_sorting + "&category_id=" + category_id;   /* name of file to send request to */
     try
     {
         const response = await fetch(call_url,
@@ -51,6 +56,19 @@ async function displayProducts()
         test = response;
         let product_string = "";
         let pages_string = "";
+        let categories_string = "";
+        if (response.data.categories.length > 0)
+        {
+            for (let i = 0; i < response.data.categories.length; i++)
+            {
+                let category_products = parseInt(response.data.categories_numbers[i]);
+                if (!category_products)
+                {
+                    category_products = 0;
+                }
+                categories_string += '<li class="main-nav-list"><a onclick="setParam(\'category_id\', ' + response.data.categories[i].category_id + ')" data-toggle="collapse" href="" aria-expanded="false" aria-controls="' + response.data.categories[i].category_name + '"><spanclass="lnr lnr-arrow-right"></span>' + response.data.categories[i].category_name + '<span class="number">(' + category_products + ')</span></a></li>';
+            }
+        }
         if (response.data.products.length > 0 && response.data.products[0] !== false)
         {
             for (let i = 0; i < response.data.products.length; i++)
@@ -118,6 +136,7 @@ async function displayProducts()
         }
         document.getElementById("product_list").classList.add("show_nice");
         document.getElementById("product_list").innerHTML = product_string;
+        document.getElementById("ag_categories").innerHTML = categories_string;
     }
 }
 $(document).on("click", '.disable_page_button', function (event) {

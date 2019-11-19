@@ -1530,7 +1530,8 @@ h1, h2, h3, h4, h5, h6 {
     transition: all 0.3s ease 0s; }
   .single-product img {
     margin-bottom: 20px;
-    width: 100%; }
+    width: 100%;
+    background-color: #1a9782; }
   .single-product .product-details h6 {
     font-size: 16px;
     text-transform: uppercase; }
