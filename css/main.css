@@ -4031,6 +4031,11 @@ label {
 .product_description_area {
   padding-bottom: 120px;
   margin-top: 60px; }
+  .product_description_area .ag_link {
+    text-decoration: none;
+    color: #fff; }
+    .product_description_area .ag_link:hover {
+      color: #3aa53d; }
   .product_description_area .nav.nav-tabs {
     background: #1a9782;
     text-align: center;
@@ -4191,6 +4196,10 @@ label {
   margin-right: 10px;
   border-radius: 5px;
   border: none; }
+
+.ag_single_product_image {
+  width: 100%;
+  background-color: #1a9782; }
 
 /* End Single Product Area css
 ============================================================================================ */

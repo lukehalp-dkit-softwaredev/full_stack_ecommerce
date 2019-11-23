@@ -11,7 +11,7 @@
         $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
 
         /* Perform Query */
-        $query = "SELECT product_id, name, description, image_url, unit_price, category_id FROM products WHERE product_id = :product_id";
+        $query = "SELECT p.product_id, p.stock, p.name AS product_title, p.description, p.image_url, p.unit_price, c.name AS category_name FROM products p, categories c WHERE p.category_id = c.category_id AND p.product_id = :product_id";
         $statement = $dbConnection->prepare($query);
         $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
         $statement->execute();
