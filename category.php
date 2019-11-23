@@ -164,7 +164,7 @@
                     <!-- End Filter Bar -->
                     <!-- Start Best Seller -->
                     <section class="lattest-product-area pb-40 category-list">
-                        <div id="product_list" style="opacity:0" class="row"></div>
+                        <div id="product_list" class="row"></div>
                     </section>
                     <!-- End Best Seller -->
                     <!-- Start Filter Bar -->

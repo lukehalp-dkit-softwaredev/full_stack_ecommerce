@@ -3,7 +3,10 @@
 $response = new stdClass();
 $default_page = 0;
 $default_pageLimit = 12; //items per page
+
 $query = "SELECT product_id, name, unit_price, image_url, stock FROM products WHERE 1=1 ";
+$where_statements = "";
+
 $page = filter_input(INPUT_GET, "pagenumber", FILTER_SANITIZE_NUMBER_INT);
 if ($page < 0) {
     $page = $default_page;
@@ -20,20 +23,22 @@ if (empty($pageLimit)) {
 }
 $name = trim(filter_input(INPUT_GET, "name", FILTER_SANITIZE_STRING));
 if ($name != null and $name != False) {
-    $query .= "AND name LIKE :name ";
+    $where_statements .= "AND name LIKE :name ";
 }
-$minprice = filter_input(INPUT_GET, "minprice", FILTER_SANITIZE_NUMBER_FLOAT);
+//Filter float requires the flag to allow fraction so the sanitizer doesn't remove the . in numbers
+$minprice = filter_input(INPUT_GET, "minprice", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 if ($minprice != null and $minprice != False) {
-    $query .= "AND unit_price > :minprice ";
+    $where_statements .= "AND unit_price > :minprice ";
 }
-$maxprice = filter_input(INPUT_GET, "maxprice", FILTER_SANITIZE_NUMBER_FLOAT);
+$maxprice = filter_input(INPUT_GET, "maxprice", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 if ($maxprice != null and $maxprice != False) {
-    $query .= "AND unit_price < :maxprice ";
+    $where_statements .= "AND unit_price < :maxprice ";
 }
 $category = filter_input(INPUT_GET, "category_id", FILTER_SANITIZE_NUMBER_INT);
 if (!empty($category)) {
-    $query .= "AND category_id = :category ";
+    $where_statements .= "AND category_id = :category ";
 }
+$query .= $where_statements;
 $sorting = trim(filter_input(INPUT_GET, "sorting", FILTER_SANITIZE_STRING));
 strtolower($sorting);
 if (!empty($sorting)) {
@@ -43,12 +48,12 @@ if (!empty($sorting)) {
         $query .= "ORDER BY unit_price DESC ";
     }
 }
+
 //pagestart is exclusive
 $pageStart = $page * $pageLimit;
 require_once "configuration.php";
 $dbConnection = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUsername, $dbPassword);
 $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 $query .= " LIMIT :pageStart,:pageLimit";
 $statement = $dbConnection->prepare($query);
 if ($name != null and $name != False) {
@@ -64,19 +69,37 @@ if ($maxprice != null and $maxprice != False) {
 if (!empty($category)) {
     $statement->bindParam(":category", $category, PDO::PARAM_INT);
 }
+
 $statement->bindParam(":pageStart", $pageStart, PDO::PARAM_INT);
 $statement->bindParam(":pageLimit", $pageLimit, PDO::PARAM_INT);
 $statement->execute();
+
 $response->apiVersion = "1.0";
 if ($statement->rowCount() > 0) {
     $result = $statement->fetchAll(PDO::FETCH_OBJ);
+
     foreach ($result as $row) {
         $response->data->products[] = $row;
     }
     //    $product_response->data->products = $result;
-    $query = "SELECT COUNT(*) AS count FROM products";
+
+    $query = "SELECT COUNT(*) AS count FROM products WHERE 1=1 " . $where_statements;
     $statement = $dbConnection->prepare($query);
+    if ($name != null and $name != False) {
+        $name = '%' . $name . '%';
+        $statement->bindParam(":name", $name, PDO::PARAM_STR);
+    }
+    if ($minprice != null and $minprice != False) {
+        $statement->bindParam(":minprice", strval($minprice), PDO::PARAM_STR);
+    }
+    if ($maxprice != null and $maxprice != False) {
+        $statement->bindParam(":maxprice", strval($maxprice), PDO::PARAM_STR);
+    }
+    if (!empty($category)) {
+        $statement->bindParam(":category", $category, PDO::PARAM_INT);
+    }
     $statement->execute();
+
     $response->data->prod_count = $statement->fetch(PDO::FETCH_OBJ);
 } else {
     $response->data->products[] = $statement->fetch(PDO::FETCH_OBJ);
@@ -85,33 +108,5 @@ if ($statement->rowCount() > 0) {
     $error->msg = "No products found.";
     $response->error = $error;
 }
-//category id move to the product search
-$query = "SELECT category_id, name AS category_name FROM categories";
-$statement = $dbConnection->prepare($query);
-$statement->execute();
-if ($statement->rowCount() > 0) {
-    $results = $statement->fetchAll(PDO::FETCH_OBJ);
-    $response->data->categories = $results;
-    $query = "SELECT COUNT(*) AS product_count FROM products GROUP BY category_id";
-    $statement = $dbConnection->prepare($query);
-    $statement->execute();
-    if ($statement->rowCount() > 0) {
-        $results = $statement->fetchAll(PDO::FETCH_OBJ);
-        $response->data->categories_numbers = $result;
-    } else {
-        // Categories not found
-        $error = new stdClass();
-        $error->code = 404;
-        $error->msg = "Something went wrong? Oops.";
-        $response->error = $error;
-        http_response_code(404);
-    }
-} else {
-    // Categories not found
-    $error = new stdClass();
-    $error->code = 404;
-    $error->msg = "No categories found.";
-    $response->error = $error;
-    http_response_code(404);
-}
 echo json_encode($response);
+?>
