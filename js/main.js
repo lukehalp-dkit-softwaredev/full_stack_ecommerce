@@ -245,7 +245,7 @@ $(document).ready(function () {
 
 
 
-    
+
 
 
     //-------- Have Cupon Button Text Toggle Change -------//
@@ -531,6 +531,10 @@ $(document).ready(function () {
     }
 
 
-
+    const query = window.location.search;
+    if (query.includes("code=") && query.includes("state=")) {
+        // Use replaceState to  remove the querystring parameters
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
 
 });

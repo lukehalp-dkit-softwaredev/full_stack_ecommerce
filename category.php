@@ -1,5 +1,18 @@
-<?php 
-session_start();
+<?php
+require 'vendor/autoload.php';
+
+use Auth0\SDK\Auth0;
+
+$auth0 = new Auth0([
+    'domain' => 'dev-44t0mog0.eu.auth0.com',
+    'client_id' => 'hzLwly8pSwfEEJPBcJXtd8HLLS6eO0ZC',
+    'client_secret' => 'oUbeVZiuepsh92ldnjHHPAuEaI2WDEjDUM7aXAN-vcONJlRZ9T5SrB-SQUwiA8Rr',
+    'redirect_uri' => 'http://localhost/FullStackWebDevY2S1_project2/category.php',
+    'persist_id_token' => true,
+    'persist_access_token' => true,
+    'persist_refresh_token' => true,
+        ]);
+$userInfo = $auth0->getUser();
 ?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -51,7 +64,7 @@ session_start();
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                             <ul class="nav navbar-nav menu_nav ml-auto">
-                                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                                 <li class="nav-item submenu dropdown active">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                        aria-expanded="false">Shop</a>
@@ -81,6 +94,13 @@ session_start();
                                     </ul>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                                <li class="nav-item">
+                                    <?php if (!$userInfo): ?>
+                                        <a class="nav-link" href="api/users/login.php">Log In</a>
+                                    <?php else: ?>
+                                        <a class="nav-link" href="api/users/logout.php">Log Out</a>
+                                    <?php endif ?>
+                                </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>

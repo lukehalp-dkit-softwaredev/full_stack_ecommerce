@@ -5840,4 +5840,7 @@ label {
   -o-transition-duration: 0.5s, 0s;
   transition-duration: 0.5s, 0s; }
 
+.hidden {
+  display: none; }
+
 /*# sourceMappingURL=main.css.map */

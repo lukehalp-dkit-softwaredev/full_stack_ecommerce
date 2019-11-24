@@ -1,3 +1,19 @@
+<?php
+require '../vendor/autoload.php';
+
+use Auth0\SDK\Auth0;
+
+$auth0 = new Auth0([
+    'domain' => 'dev-44t0mog0.eu.auth0.com',
+    'client_id' => 'hzLwly8pSwfEEJPBcJXtd8HLLS6eO0ZC',
+    'client_secret' => 'oUbeVZiuepsh92ldnjHHPAuEaI2WDEjDUM7aXAN-vcONJlRZ9T5SrB-SQUwiA8Rr',
+    'redirect_uri' => 'http://localhost/FullStackWebDevY2S1_project2/test/login.php',
+    'persist_id_token' => true,
+    'persist_access_token' => true,
+    'persist_refresh_token' => true,
+        ]);
+$userInfo = $auth0->getUser();
+?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -28,10 +44,10 @@
         <link rel="stylesheet" href="../css/nouislider.min.css">
         <link rel="stylesheet" href="../css/bootstrap.css">
         <link rel="stylesheet" href="../css/main.css">
+        <script>let userInfo = <?php echo json_encode($userInfo); ?>;console.log(userInfo);</script>
     </head>
 
     <body>
-
         <!-- Start Header Area -->
         <header class="header_area sticky-header">
             <div class="main_menu">
@@ -78,6 +94,13 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                                <li class="nav-item">
+                                    <?php if (!$userInfo): ?>
+                                        <a class="nav-link" href="login1.php">Log In</a>
+                                    <?php else: ?>
+                                        <a class="nav-link" href="logout.php">Log Out</a>
+                                    <?php endif ?>
+                                </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
@@ -121,6 +144,22 @@
         <section class="login_box_area section_gap">
             <div class="container">
                 <div class="row">
+                    <div class="hidden" id="gated-content">
+                        <p>
+                            You're seeing this content because you're currently
+                            <strong>logged in</strong>.
+                        </p>
+                        <label>
+                            Access token:
+                            <pre id="ipt-access-token"></pre>
+                        </label>
+                        <label>
+                            User profile:
+                            <pre id="ipt-user-profile"></pre>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-lg-6">
                         <div class="login_box_img">
                             <img class="img-fluid" src="img/login.jpg" alt="">
@@ -152,9 +191,17 @@
                                     <button type="submit" value="submit" disabled="true" id="btn-login"onclick="login()" class="primary-btn">Log In</button>
                                     <a href="#">Forgot Password?</a>
                                 </div>
-                            </form>-->
+                            </form>
                             <button disabled="true" id="btn-logout" onclick="logout()" class="primary-btn">Log Out</button>
                             <button disabled="true" id="btn-login" onclick="login()" class="primary-btn">Log In</button>
+                            -->
+                            <div>
+                                <?php if (!$userInfo): ?>
+                                    <a href="login1.php">Log In</a>
+                                <?php else: ?>
+                                    <a href="logout.php">Log Out</a>
+                                <?php endif ?>
+                            </div>
                         </div>
                     </div>
                 </div>
