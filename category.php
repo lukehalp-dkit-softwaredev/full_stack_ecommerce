@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -54,7 +57,7 @@
                                        aria-expanded="false">Shop</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item active"><a class="nav-link" href="category.php">Shop Category</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="single-product.php">Product Details</a></li>
                                         <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
                                         <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
                                         <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>

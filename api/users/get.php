@@ -3,7 +3,7 @@
 
     $response = new stdClass();
 
-    if (isset($_GET['product'])) {
+    if (isset($_GET['user'])) {
         $product_id = ltrim(rtrim(filter_input(INPUT_GET, "user", FILTER_SANITIZE_NUMBER_INT)));
         
         /* Connect to the database */

@@ -195,7 +195,7 @@ $(document).on("click", '.ag-page-selector-arrow', function (event) {
     goNewPage(parseInt(this.title));
 });
 $(document).on("click", '.single-product', function (event) {
-    location.href = "single-product.html?product=" + this.title;
+    location.href = "single-product.php?product=" + this.title;
 });
 function goNewPage(pageNumber, saveState)
 {
