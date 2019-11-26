@@ -1,7 +1,7 @@
 <?php
 
 require '../../vendor/autoload.php';
-
+\Firebase\JWT\JWT::$leeway = 60;
 use Auth0\SDK\Auth0;
 
 $auth0 = new Auth0([

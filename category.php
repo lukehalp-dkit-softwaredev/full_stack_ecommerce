@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+\Firebase\JWT\JWT::$leeway = 60;
 
 use Auth0\SDK\Auth0;
 
@@ -13,6 +14,7 @@ $auth0 = new Auth0([
     'persist_refresh_token' => true,
         ]);
 $userInfo = $auth0->getUser();
+echo json_encode($userInfo);
 ?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -94,13 +96,18 @@ $userInfo = $auth0->getUser();
                                     </ul>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                                <li class="nav-item">
-                                    <?php if (!$userInfo): ?>
-                                        <a class="nav-link" href="api/users/login.php">Log In</a>
-                                    <?php else: ?>
-                                        <a class="nav-link" href="api/users/logout.php">Log Out</a>
-                                    <?php endif ?>
-                                </li>
+                                <?php if (!$userInfo): ?>
+                                    <li class="nav-item"><a class="nav-link" href="api/users/login.php">Log In</a></li>
+                                <?php else: ?>
+                                    <li class="nav-item submenu dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                           aria-expanded="false"><?php echo $userInfo["nickname"] ?></a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item"><a class="nav-link" href="profile_settings.php">Settings</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="api/users/logout.php">Log out</a></li>
+                                        </ul>
+                                    </li>
+                                <?php endif ?>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
