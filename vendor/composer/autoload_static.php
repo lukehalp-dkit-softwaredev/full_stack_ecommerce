@@ -23,6 +23,7 @@ class ComposerStaticInit843b21b83770fb54686b3b05871f9c3b
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'Godruoyi\\Snowflake\\' => 19,
         ),
         'F' => 
         array (
@@ -50,6 +51,10 @@ class ComposerStaticInit843b21b83770fb54686b3b05871f9c3b
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'Godruoyi\\Snowflake\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/godruoyi/php-snowflake/src',
         ),
         'Firebase\\JWT\\' => 
         array (

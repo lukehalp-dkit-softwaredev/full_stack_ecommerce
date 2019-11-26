@@ -98,6 +98,54 @@
         "homepage": "https://github.com/firebase/php-jwt"
     },
     {
+        "name": "godruoyi/php-snowflake",
+        "version": "1.0.6",
+        "version_normalized": "1.0.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/godruoyi/php-snowflake.git",
+            "reference": "9d1e378a525783c136571b1ed8cf3fab30e16d23"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/godruoyi/php-snowflake/zipball/9d1e378a525783c136571b1ed8cf3fab30e16d23",
+            "reference": "9d1e378a525783c136571b1ed8cf3fab30e16d23",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~7"
+        },
+        "time": "2019-11-22T15:56:07+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Godruoyi\\Snowflake\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Godruoyi",
+                "email": "g@godruoyi.com"
+            }
+        ],
+        "description": "An ID Generator for PHP based on Snowflake Algorithm (Twitter announced).",
+        "homepage": "https://github.com/godruoyi/php-snowflake",
+        "keywords": [
+            "Unique ID",
+            "laravel snowflake",
+            "order id",
+            "php snowflake",
+            "php unique id",
+            "snowflake algorithm",
+            "unique order id"
+        ]
+    },
+    {
         "name": "guzzlehttp/guzzle",
         "version": "6.4.1",
         "version_normalized": "6.4.1.0",
