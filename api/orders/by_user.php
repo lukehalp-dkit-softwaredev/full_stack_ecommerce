@@ -11,7 +11,7 @@
         $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
 
         /* Perform Query */
-        $query = "SELECT order_id, user_id, date_created, date_ordered FROM orders WHERE user_id = :user_id";
+        $query = "SELECT order_id, user_id, date_created, date_ordered FROM orders WHERE user_id = :user_id AND date_ordered != NULL";
         $statement = $dbConnection->prepare($query);
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT);
         $statement->execute();
