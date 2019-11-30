@@ -1,4 +1,5 @@
 <?php
+require_once 'php/configuration.php';
 require 'vendor/autoload.php';
 \Firebase\JWT\JWT::$leeway = 60;
 

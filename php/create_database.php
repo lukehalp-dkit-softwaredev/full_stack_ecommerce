@@ -27,7 +27,10 @@
         $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
 
         /* Create table */
-        $query = "CREATE TABLE IF NOT EXISTS products(
+        $query = "CREATE TABLE IF NOT EXISTS categories(
+                    category_id INT NOT NULL PRIMARY KEY,
+                    name VARCHAR(64) NOT NULL);"
+                . "CREATE TABLE IF NOT EXISTS products(
                     product_id INT NOT NULL PRIMARY KEY,
                     name VARCHAR(88) NOT NULL,
                     description TEXT NOT NULL,
@@ -55,9 +58,6 @@
                     PRIMARY KEY (order_id, product_id),
                     FOREIGN KEY (order_id) REFERENCES orders(order_id),
                     FOREIGN KEY (product_id) REFERENCES products(product_id));"
-                . "CREATE TABLE IF NOT EXISTS categories(
-                    category_id INT NOT NULL PRIMARY KEY,
-                    name VARCHAR(64) NOT NULL);"
                 /* Alter table statements for existing tables */
                 . "ALTER TABLE products ADD category_id INT NOT NULL;
                     ALTER TABLE products ADD FOREIGN KEY (category_id) REFERENCES categories(category_id);";
@@ -66,7 +66,7 @@
 
         $statement = $dbConnection->prepare("SHOW TABLES;");
         $statement->execute();
-        
+
         echo json_encode($statement->fetchAll(PDO::FETCH_OBJ));
 
         /* Provide feedback to the user */
