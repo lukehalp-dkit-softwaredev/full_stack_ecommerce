@@ -26,3 +26,7 @@
     opacity: 1 !important;
     @include transition-duration(.5s, 0s);
 }
+.ag-active-category
+{
+    color:$primary-color !important;
+}

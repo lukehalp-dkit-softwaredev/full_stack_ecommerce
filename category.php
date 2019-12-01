@@ -1,5 +1,4 @@
 <?php
-
 require_once "./php/configuration.php";
 
 require 'vendor/autoload.php';
@@ -141,9 +140,9 @@ echo json_encode($userInfo);
                     <div class="col-first">
                         <h1>Shop Category page</h1>
                         <nav class="d-flex align-items-center">
-                            <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                            <a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
-                            <a href="category.html">Fashon Category</a>
+                            <a href="index.php">Home<span class="lnr lnr-arrow-right"></span></a>
+                            <a href="category.php">Shop<span class="lnr lnr-arrow-right"></span></a>
+                            <a id="current_category" href="category.php">All</a>
                         </nav>
                     </div>
                 </div>

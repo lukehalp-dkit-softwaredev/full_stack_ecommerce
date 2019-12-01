@@ -173,15 +173,19 @@ async function displayCategories()
     {
         test2 = response;
         let categories_string = "";
+        let total_count = 0;
         if (response.data.categories.length > 0)
         {
             for (let i = 0; i < response.data.categories.length; i++)
             {
                 let product_count = parseInt(response.data.categories_numbers[i].product_count);
-                categories_string += '<li class="main-nav-list"><a onclick="setParam(\'category_id\', ' + response.data.categories[i].category_id + ')" data-toggle="collapse" href="" aria-expanded="false" aria-controls="' + response.data.categories[i].name + '"><spanclass="lnr lnr-arrow-right"></span>' + response.data.categories[i].name + '<span class="number">(' + product_count + ')</span></a></li>';
+                total_count += product_count;
+                categories_string += '<li class="main-nav-list"><a class="ag-category-item" title="' + response.data.categories[i].category_id + '" onclick="categoryClick(this);setParam(\'category_id\', ' + response.data.categories[i].category_id + ')" data-toggle="collapse" href="" aria-expanded="false" aria-controls="' + response.data.categories[i].name + '"><spanclass="lnr lnr-arrow-right"></span>' + response.data.categories[i].name + '<span class="number">(' + product_count + ')</span></a></li>';
             }
         }
-        document.getElementById("ag_categories").innerHTML = categories_string;
+        let all_categories = '<li class="main-nav-list"><a class="ag-category-item" title="all categories" onclick="categoryClick(this);setParam(\'category_id\', null)" data-toggle="collapse" href="" aria-expanded="false" aria-controls="All categories"><spanclass="lnr lnr-arrow-right"></span>All categories<span class="number">(' + total_count + ')</span></a></li>';
+        document.getElementById("ag_categories").innerHTML = all_categories + categories_string;
+        categoryClick();
     }
 }
 $(document).on("click", '.disable_page_button', function (event) {
@@ -284,4 +288,28 @@ function loadNoUiSlider()
             setParams("minprice", min_range, "maxprice", max_range);
         }
     });
+}
+function categoryClick(clickedElement)
+{
+    console.log(clickedElement);
+    var categories = document.getElementsByClassName("ag-category-item");
+    var current_category_header_element = document.getElementById("current_category");
+    for (let i = 0; i < categories.length; i++)
+    {
+        categories[i].classList.remove("ag-active-category");
+    }
+    if (clickedElement) {
+        clickedElement.classList.add("ag-active-category");
+        current_category_header_element.innerHTML = clickedElement.innerHTML;
+    } else {
+        //set active category from url
+        for (let i = 0; i < categories.length; i++)
+        {
+            if (categories[i].title === url.searchParams.get("category_id"))
+            {
+                categories[i].classList.add("ag-active-category");
+                current_category_header_element.innerHTML = categories[i].innerHTML;
+            }
+        }
+    }
 }
