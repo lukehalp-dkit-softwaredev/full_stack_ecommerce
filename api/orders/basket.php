@@ -41,7 +41,7 @@
 
         if($userInfo['sub'] == $result->user_id) {
             /* Get items in order */
-            $query = "SELECT product_id, quantity FROM order_lines WHERE order_id = :order_id";
+            $query = "SELECT order_lines.product_id, order_lines.quantity, products.name, products.unit_price, products.stock FROM order_lines, products WHERE order_id = :order_id AND order_lines.product_id = products.product_id";
             $statement = $dbConnection->prepare($query);
             $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
             $statement->execute();

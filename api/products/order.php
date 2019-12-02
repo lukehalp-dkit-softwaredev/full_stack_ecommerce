@@ -22,64 +22,95 @@
 
     if (isset($_GET['product']) && isset($_GET['quantity'])) {
         $product_id = filter_input(INPUT_GET, "product", FILTER_SANITIZE_NUMBER_INT);
-        $user_id = $userInfo['sub'];
-        /* Connect to the database */
-        $dbConnection = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUsername, $dbPassword);
-        $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
-
-        /* Perform Query */
-        $query = "SELECT order_id FROM orders WHERE user_id = :user_id AND date_ordered IS NULL";
-        $statement = $dbConnection->prepare($query);
-        $statement->bindParam(":user_id", $user_id, PDO::PARAM_STR);
-        $statement->execute();
-
-        if ($statement->rowCount() > 0) {
-            $result = $statement->fetch(PDO::FETCH_OBJ);
-
-            $quantity = filter_input(INPUT_GET, "quantity", FILTER_SANITIZE_NUMBER_INT);
+        $quantity = filter_input(INPUT_GET, "quantity", FILTER_SANITIZE_NUMBER_INT);
+        if($quantity > 0) {
+            $user_id = $userInfo['sub'];
+            /* Connect to the database */
+            $dbConnection = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUsername, $dbPassword);
+            $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
 
             /* Perform Query */
-            $query = "INSERT INTO order_lines(order_id,product_id,quantity) VALUES (:order_id, :product_id, :quantity);";
+            $query = "SELECT order_id FROM orders WHERE user_id = :user_id AND date_ordered IS NULL";
             $statement = $dbConnection->prepare($query);
-            $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
-            $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
-            $statement->bindParam(":quantity", $quantity, PDO::PARAM_INT);
+            $statement->bindParam(":user_id", $user_id, PDO::PARAM_STR);
             $statement->execute();
 
             if ($statement->rowCount() > 0) {
+                $result = $statement->fetch(PDO::FETCH_OBJ);
 
+                /* Perform Query */
+                $query = "INSERT INTO order_lines(order_id,product_id,quantity) VALUES (:order_id, :product_id, :quantity);";
+                $statement = $dbConnection->prepare($query);
+                $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
+                $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
+                $statement->bindParam(":quantity", $quantity, PDO::PARAM_INT);
+                $statement->execute();
+
+                if ($statement->rowCount() > 0) {
+                    $data = new stdClass();
+                    $data->product_id = $product_id;
+                    $data->quantity = $quantity;
+
+                    $response->apiVersion = "1.0";
+                    $response->data = $data;
+                } else {
+                    //Couldnt add product to basket
+                    $error = new stdClass();
+                    $error->code = 500;
+                    $error->msg = "Couldnt add item.";
+
+                    $response->apiVersion = "1.0";
+                    $response->error = $error;
+
+                    http_response_code(500);
+                }
             } else {
-                //Couldnt add product to basket
-                $error = new stdClass();
-                $error->code = 500;
-                $error->msg = "Couldnt add item.";
+                // No basket found
+                $order_id = $snowflake->id();
+                $query = "INSERT INTO orders(order_id, user_id) VALUES (:order_id, :user_id);";
+                $statement = $dbConnection->prepare($query);
+                $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
+                $statement->bindParam(":user_id", $user_id, PDO::PARAM_STR);
+                $statement->execute();
 
-                $response->apiVersion = "1.0";
-                $response->error = $error;
+                /* Perform Query */
+                $query = "INSERT INTO order_lines(order_id,product_id,quantity) VALUES (:order_id, :product_id, :quantity);";
+                $statement = $dbConnection->prepare($query);
+                $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
+                $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
+                $statement->bindParam(":quantity", $quantity, PDO::PARAM_INT);
+                $statement->execute();
 
-                http_response_code(404);
+                if ($statement->rowCount() > 0) {
+                    $data = new stdClass();
+                    $data->status = "OK";
+                    $data->product_id = $product_id;
+                    $data->quantity = $quantity;
+
+                    $response->apiVersion = "1.0";
+                    $response->data = $data;
+                } else {
+                    //Couldnt add product to basket
+                    $error = new stdClass();
+                    $error->code = 500;
+                    $error->msg = "Couldnt add item.";
+
+                    $response->apiVersion = "1.0";
+                    $response->error = $error;
+
+                    http_response_code(500);
+                }
             }
         } else {
-            // No basket found
-            $order_id = $snowflake->id();
-            echo $order_id;
-            $query = "INSERT INTO orders(order_id, user_id) VALUES (:order_id, :user_id);";
-            $statement = $dbConnection->prepare($query);
-            $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
-            $statement->bindParam(":user_id", $user_id, PDO::PARAM_STR);
-            // $statement->execute();
-
-
-            echo json_encode($order_id);
-
+            // Invalid quantity
             $error = new stdClass();
-            $error->code = 404;
-            $error->msg = "No basket found.";
+            $error->code = 400;
+            $error->msg = "Malformed URL, please check url parameters and try again.";
 
             $response->apiVersion = "1.0";
             $response->error = $error;
 
-            http_response_code(404);
+            http_response_code(400);
         }
 
         

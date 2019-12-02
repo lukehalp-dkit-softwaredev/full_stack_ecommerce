@@ -5852,4 +5852,5 @@ label {
 .ag-active-category {
   color: #3aa53d !important; }
 
-/*# sourceMappingURL=main.css.map */
+.cart_image {
+  width: 25%; }
