@@ -1,29 +1,33 @@
 <?php
-    require_once "../../php/configuration.php";
 
-    require '../../vendor/autoload.php';
-    use Auth0\SDK\Auth0;
+require_once "../../php/configuration.php";
 
-    $snowflake = new \Godruoyi\Snowflake\Snowflake;
-    $snowflake->setStartTimeStamp(strtotime('2019-11-11')*1000);
+require '../../vendor/autoload.php';
 
-    $auth0 = new Auth0([
-        'domain' => 'dev-44t0mog0.eu.auth0.com',
-        'client_id' => 'hzLwly8pSwfEEJPBcJXtd8HLLS6eO0ZC',
-        'client_secret' => 'oUbeVZiuepsh92ldnjHHPAuEaI2WDEjDUM7aXAN-vcONJlRZ9T5SrB-SQUwiA8Rr',
-        'redirect_uri' => $siteName . '/category.php',
-        'persist_id_token' => true,
-        'persist_access_token' => true,
-        'persist_refresh_token' => true,
-    ]);
-    $userInfo = $auth0->getUser();
+use Auth0\SDK\Auth0;
 
+\Firebase\JWT\JWT::$leeway = 60;
+$snowflake = new \Godruoyi\Snowflake\Snowflake;
+$snowflake->setStartTimeStamp(1000);
+
+
+$auth0 = new Auth0([
+    'domain' => $auth0_domain,
+    'client_id' => $auth0_client_id,
+    'client_secret' => $auth0_client_secret,
+    'redirect_uri' => $siteName . '/category.php',
+    'persist_id_token' => true,
+    'persist_access_token' => true,
+    'persist_refresh_token' => true,
+        ]);
+$userInfo = $auth0->getUser();
+if ($userInfo) {
     $response = new stdClass();
 
     if (isset($_GET['product']) && isset($_GET['quantity'])) {
         $product_id = filter_input(INPUT_GET, "product", FILTER_SANITIZE_NUMBER_INT);
         $quantity = filter_input(INPUT_GET, "quantity", FILTER_SANITIZE_NUMBER_INT);
-        if($quantity > 0) {
+        if ($quantity > 0) {
             $user_id = $userInfo['sub'];
             /* Connect to the database */
             $dbConnection = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUsername, $dbPassword);
@@ -112,8 +116,6 @@
 
             http_response_code(400);
         }
-
-        
     } else {
         // Product id not in url
         $error = new stdClass();
@@ -125,6 +127,15 @@
 
         http_response_code(400);
     }
+} else { // Product id not in url
+    $error = new stdClass();
+    $error->code = 400;
+    $error->msg = "Malformed URL, please check url parameters and try again.";
 
-    echo json_encode($response);
+    $response->apiVersion = "1.0";
+    $response->error = $error;
+
+    http_response_code(400);
+}
+echo json_encode($response);
 ?>
