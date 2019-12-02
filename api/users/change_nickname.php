@@ -12,9 +12,9 @@ require '../../vendor/autoload.php';
 use Auth0\SDK\Auth0;
 
 $auth0 = new Auth0([
-    'domain' => 'dev-44t0mog0.eu.auth0.com',
-    'client_id' => 'hzLwly8pSwfEEJPBcJXtd8HLLS6eO0ZC',
-    'client_secret' => 'oUbeVZiuepsh92ldnjHHPAuEaI2WDEjDUM7aXAN-vcONJlRZ9T5SrB-SQUwiA8Rr',
+    'domain' => $auth0_domain,
+    'client_id' => $auth0_client_id,
+    'client_secret' => $auth0_client_secret,
     'redirect_uri' => $siteName . '/category.php',
     'persist_id_token' => true,
     'persist_access_token' => true,
