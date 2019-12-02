@@ -1,4 +1,5 @@
 <?php
+require_once 'php/configuration.php';
 require 'vendor/autoload.php';
 \Firebase\JWT\JWT::$leeway = 60;
 
@@ -14,7 +15,9 @@ $auth0 = new Auth0([
     'persist_refresh_token' => true,
         ]);
 $userInfo = $auth0->getUser();
-echo json_encode($userInfo);
+if (!$userInfo) {
+    header("location: " . $siteName);
+}
 ?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -153,13 +156,13 @@ echo json_encode($userInfo);
                         <div class="login_form_inner settings_form_inner">
                             <h1>Profile Settings</h1>
                             <img id="ag_profile_picture" alt="profile_image" src="<?php echo $userInfo["picture"]; ?>">
-                            <form class="row login_form" action="api/users/change_nickname.php" method="post" id="contactForm">
+                            <form class="row login_form" id="contactForm">
                                 <div class="col-md-12 form-group">
                                     <label for="nickname">Minecraft username:</label>
                                     <input type="text" class="form-control" id="nickname" name="nickname" minlength="3" maxlength="16" placeholder="<?php echo $userInfo["nickname"]; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Minecraft Username'">
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <button type="submit" value="submit" class="primary-btn">Save</button>
+                                    <button type="button" onclick="changeNickname()" class="primary-btn">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -261,4 +264,5 @@ echo json_encode($userInfo);
         <script src="js/jquery.magnific-popup.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/main.js"></script>
+        <script src="js/main_profile.js" type="text/javascript"></script>
     </body>

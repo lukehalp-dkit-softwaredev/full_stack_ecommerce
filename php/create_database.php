@@ -64,7 +64,7 @@
 
         $statement = $dbConnection->prepare("SHOW TABLES;");
         $statement->execute();
-        
+
         echo json_encode($statement->fetchAll(PDO::FETCH_OBJ));
 
         /* Provide feedback to the user */

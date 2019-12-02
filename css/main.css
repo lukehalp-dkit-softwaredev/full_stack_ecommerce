@@ -5849,4 +5849,7 @@ label {
   -o-transition-duration: 0.5s, 0s;
   transition-duration: 0.5s, 0s; }
 
+.ag-active-category {
+  color: #3aa53d !important; }
+
 /*# sourceMappingURL=main.css.map */
