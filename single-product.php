@@ -171,9 +171,21 @@ $userInfo = $auth0->getUser();
                                     <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
                                     <button onclick="var result = document.getElementById('sst');
                                             var sst = result.value;
-                                            if (!isNaN(sst) && result.value < parseInt(document.getElementById('ag_single_product_stock_level').title))
+                                            var stock_level = document.getElementById('ag_single_product_stock_level').title;
+                                            if (stock_level == 'unlimited')
+                                            {
+                                                stock_level = 999;
+                                            } else
+                                            {
+                                                stock_level = parseInt(stock_level);
+                                            }
+                                            if (!isNaN(sst) && result.value < stock_level) {
                                                 result.value++;
-                                            return false;"
+                                            } else
+                                            {
+                                                return false;
+                                            }
+                                            "
                                             class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
                                     <button onclick="var result = document.getElementById('sst');
                                             var sst = result.value;

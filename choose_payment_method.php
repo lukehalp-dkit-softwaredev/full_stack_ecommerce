@@ -39,38 +39,7 @@ if ($userInfo) {
         $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
         $statement->execute();
         if ($statement->rowCount() > 0) {
-            $user_email = $userInfo['email'];
-            $session_object = [
-                'payment_intent_data' => [
-                    'setup_future_usage' => 'off_session',
-                ],
-//                'customer' => $userInfo["sub"],
-                'customer_email' => $user_email,
-                'payment_method_types' => ['card'],
-                'line_items' => [],
-                'success_url' => $siteName . 'confirmation.php?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => 'https://example.com/cancel',
-            ];
-            $result = $statement->fetchAll(PDO::FETCH_OBJ);
-            /**
-              'name' => '60-minute massage',
-              'description' => 'A 60-minute therapeutic massage',
-              'images' => ['https://example.com/massage.png'],
-              'amount' => 7000,
-              'currency' => 'eur',
-              'quantity' => 1, */
-            foreach ($result as $row) {
-                $item = [
-                    "name" => $row->name,
-                    "description" => $row->description,
-//                $session_object->line_items->images = $row["products.description"];
-                    "amount" => $row->unit_price * 100,
-                    "currency" => "eur",
-                    "quantity" => $row->quantity
-                ];
-                $session_object['line_items'][] = $item;
-            }
-            $session = \Stripe\Checkout\Session::create($session_object);
+            
         } else {
             //order line empty???
             $error->code = 404;
@@ -105,7 +74,7 @@ if ($userInfo) {
         <!-- meta character set -->
         <meta charset="UTF-8">
         <!-- Site Title -->
-        <title>Just Another Minecraft Store Payment</title>
+        <title>Just Another Minecraft Store Choose Payment Method</title>
 
         <!--
             CSS
@@ -121,23 +90,43 @@ if ($userInfo) {
 
         <script src="https://js.stripe.com/v3/"></script>
         <script>
-            console.log(<?php json_encode($session_object) ?>);
-            var stripe = Stripe('<?php echo $stripePK; ?>');
-            stripe.redirectToCheckout({
-                // Make the id field from the Checkout Session creation API response
-                // available to this file, so you can provide it as parameter here
-                // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
-                sessionId: '<?php echo $session->id; ?>'
-            }).then(function (result) {
-                // If `redirectToCheckout` fails due to a browser or network
-                // error, display the localized error message to your customer
-                // using `result.error.message`.
-            });
         </script>
 
     </head>
     <body>
+        <div class="container ag_payment_method_container">
+            <div class="row">
+                <div class="checkout-wrap">
+                    <ul class="checkout-bar">
 
+                        <li class="first active">
+                            <a href="#">Calculate cost</a>
+                        </li>
+
+                        <li class="next">Confirm Payment</li>
+
+                        <li class="">Payment Complete</li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="row ag_payment_method_header">
+                        <h2>Choose payment method</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 ag_payment_method">
+                            <button class="primary-btn">Paypal</button>
+                        </div>
+                        <div class="col-6 ag_payment_method">
+                            <button class="primary-btn">Card</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </body>
 </html>
 
