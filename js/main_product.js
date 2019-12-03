@@ -43,6 +43,10 @@ async function displayProduct()
             product_short_description_container.innerHTML = data.description;
             if (data.stock > 0 || data.stock == -1)
             {
+                if (data.stock == -1)
+                {
+                    data.stock = "unlimited";
+                }
                 product_availability_container.innerHTML = '<a href="#"><span>Availibility</span> : In Stock <span title="' + data.stock + '" id="ag_single_product_stock_level">(' + data.stock + ')</span></a>';
 
             } else

@@ -10,6 +10,7 @@
 /* Tablet Layout: 768px */
 /* Mobile Layout: 320px */
 /* Wide Mobile Layout: 480px */
+/* Progress Bar*/
 /* Section Gaps css
 ============================================================================================ */
 .no-padding {
@@ -5852,5 +5853,12 @@ label {
 .ag-active-category {
   color: #3aa53d !important; }
 
+.ag_payment_method_container {
+  text-align: center; }
+  .ag_payment_method_container .ag_payment_method_header h2 {
+    width: 100%; }
+
 .cart_image {
   width: 25%; }
+
+/*# sourceMappingURL=main.css.map */

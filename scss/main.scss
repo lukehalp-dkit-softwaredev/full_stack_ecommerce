@@ -30,8 +30,22 @@
 {
     color:$primary-color !important;
 }
+.ag_payment_method_container
+{
+    text-align: center;
 
+    .ag_payment_method_header
+    {
+        h2
+        {
+            width: 100%;
+        }
+    }
+    .ag_payment_method
+    {
 
+    }
+}
 
 .cart_image
 {
