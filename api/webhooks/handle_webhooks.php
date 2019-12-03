@@ -74,11 +74,14 @@ function handle_checkout_session($session) {
         $statement->execute();
         if($statement->rowCount() > 0) {
             $results = $statement->fetchAll(PDO::FETCH_OBJ);
-            foreach ($result as $row) {
+            foreach ($results as $result) {
                 $quantity = $result->quantity;
                 $query = "SELECT product_id, stock FROM products WHERE product_id = :product_id";
                 $statement = $dbConnection->prepare($query);
-                $statement->bindParam(":product_id", $result->product_id, PDO::PARAM_INT);
+
+                $product_id = $result->product_id;
+
+                $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
                 $statement->execute();
 
                 if($statement->rowCount() > 0) {
@@ -86,6 +89,9 @@ function handle_checkout_session($session) {
                     $newstock = $result->stock;
                     if($result->stock != -1) {
                         $newstock = $newstock - $quantity;
+                        if($newstock < 0) {
+                            $newstock = 0;
+                        }
                     }
                     $query = "UPDATE products SET stock = :stock WHERE product_id = :product_id";
                     $statement = $dbConnection->prepare($query);
@@ -116,14 +122,13 @@ function handle_checkout_session($session) {
 
                 $order_id = $snowflake->id();
 
-                http_response_code(202);
                 $query = "INSERT INTO orders(order_id, user_id) VALUES (:order_id, :user_id)";
                 $statement = $dbConnection->prepare($query);
                 $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
                 $statement->bindParam(":user_id", $user_id, PDO::PARAM_STR);
                 $statement->execute();
 
-                http_response_code(200);
+                http_response_code(201);
                 exit();
             } else {
                 //Invalid order id?
