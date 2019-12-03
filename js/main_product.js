@@ -29,6 +29,13 @@ async function displayProduct()
         if (response.data)
         {
             let data = response.data;
+
+            let id = data.product_id;
+            document.getElementById("order_button").addEventListener('click', function() {
+                event.preventDefault();
+                orderProduct(id);
+            });
+
             let product_images_container = document.getElementById("ag_single_product_images");
             let product_title_container = document.getElementById("ag_single_product_title");
             let product_price_container = document.getElementById("ag_single_product_price");
@@ -59,4 +66,36 @@ async function displayProduct()
             document.getElementById("ag_single_product_container").innerHTML = '<section class="product_description_area"><div class="container"><h1>Oops, product not found!</h1><a class="ag_link" href="category.php">BROWSE PRODUCTS</a></div></section>';
         }
     }
+}
+
+async function orderProduct(id) {
+    let product_id = id;
+    let quantity = 0;
+    quantity = document.getElementById('sst').value;
+    if(isNaN(quantity) || quantity < 1) {
+        showError("Quantity invalid!");
+    }
+    let call_url = "api/products/order.php?product=" + product_id + "&quantity=" + quantity;
+    try
+    {
+        const response = await fetch(call_url,
+                {
+                    method: "GET",
+                    headers: {'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+                });
+
+        showSuccess(await response.json());
+    } catch (error)
+    {
+        console.log("Fetch failed: ", error);
+        showError(error);
+    }
+}
+
+function showSuccess(response) {
+    alert(`Added ${ response.data.quantity}x ${ response.data.name } to cart.`);
+}
+
+function showError(error) {
+    alert(error);
 }
