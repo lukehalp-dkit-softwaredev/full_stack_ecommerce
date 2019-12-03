@@ -1,3 +1,22 @@
+<?php
+require_once "./php/configuration.php";
+
+require 'vendor/autoload.php';
+\Firebase\JWT\JWT::$leeway = 60;
+
+use Auth0\SDK\Auth0;
+
+$auth0 = new Auth0([
+    'domain' => $auth0_domain,
+    'client_id' => $auth0_client_id,
+    'client_secret' => $auth0_client_secret,
+    'redirect_uri' => $siteName . '/index.php',
+    'persist_id_token' => true,
+    'persist_access_token' => true,
+    'persist_refresh_token' => true,
+        ]);
+$userInfo = $auth0->getUser();
+?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -15,7 +34,7 @@
         <!-- meta character set -->
         <meta charset="UTF-8">
         <!-- Site Title -->
-        <title>Karma Shop</title>
+        <title>Just Another Minecraft Store CONFIRMATION OF ORDER</title>
 
         <!--
                 CSS
@@ -108,8 +127,8 @@
                     <div class="col-first">
                         <h1>Confirmation</h1>
                         <nav class="d-flex align-items-center">
-                            <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                            <a href="category.html">Confirmation</a>
+                            <a href="index.php">Home<span class="lnr lnr-arrow-right"></span></a>
+                            <a href="category.php">Confirmation</a>
                         </nav>
                     </div>
                 </div>
@@ -118,6 +137,19 @@
         <!-- End Banner Area -->
 
         <!--================Order Details Area =================-->
+
+        <div class="checkout-wrap">
+            <ul class="checkout-bar final">
+
+                <li class="first visited">Choose payment method</li>
+
+                <li class="visited">Process Transaction</li>
+
+                <li class="visited final">Payment Complete</li>
+
+            </ul>
+        </div>
+
         <section class="order_details section_gap">
             <div class="container">
                 <h3 class="title_confirmation">Thank you. Your order has been received.</h3>
