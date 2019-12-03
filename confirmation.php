@@ -371,6 +371,7 @@ $userInfo = $auth0->getUser();
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
         <script src="js/gmaps.min.js"></script>
         <script src="js/main.js"></script>
+        <script src="js/confirmation.js"></script>
     </body>
 
 </html>

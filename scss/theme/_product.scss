@@ -1529,14 +1529,14 @@
     }
 }
 .order_details_table{
-    background: #e5ecee;
+    background: $primary-color2;
     padding: 30px;
     margin-top: 75px;
     @media (min-width: 767px) {
         margin-top: 45px;
     }
     h2{
-        color: $title-color;
+        color: $highlight-title-color;
         font-size: 18px;
         padding-bottom: 15px;
     }
@@ -1559,21 +1559,21 @@
                         margin-bottom: 0px;
                     }
                     h5{
-                        color: $title-color;
+                        color:$highlight-title-color;
                         margin-bottom: 0px;
                     }
                     h4{
                         font-size: 14px;
                         text-transform: uppercase;
                         margin-bottom: 0px;
-                        color: $title-color;
+                        color: $highlight-title-color;
                     }
                 }
                 &:last-child{
                     td{
                         border-top: 1px solid #ddd;
                         p{
-                            color: $title-color;
+                            color: $highlight-title-color;
                         }
                     }
                 }
