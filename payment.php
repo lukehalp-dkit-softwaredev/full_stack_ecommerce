@@ -34,9 +34,10 @@ if ($userInfo) {
     $statement->execute();
     if ($statement->rowCount() > 0) {
         $result = $statement->fetch(PDO::FETCH_OBJ);
+        $order_id = $result->order_id;
         $query = "SELECT order_lines.quantity, products.product_id, products.name, products.description, products.unit_price FROM order_lines, products WHERE order_id = :order_id AND order_lines.product_id = products.product_id";
         $statement = $dbConnection->prepare($query);
-        $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
+        $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
         $statement->execute();
         if ($statement->rowCount() > 0) {
             $user_email = $userInfo['email'];
@@ -45,11 +46,12 @@ if ($userInfo) {
                     'setup_future_usage' => 'off_session',
                 ],
 //                'customer' => $userInfo["sub"],
+                'client_reference_id' => $order_id,
                 'customer_email' => $user_email,
                 'payment_method_types' => ['card'],
                 'line_items' => [],
-                'success_url' => $siteName . 'confirmation.php?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => 'https://example.com/cancel',
+                'success_url' => $siteName . '/confirmation.php?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => $siteName . "/cart.php",
             ];
             $result = $statement->fetchAll(PDO::FETCH_OBJ);
             /**
@@ -137,7 +139,17 @@ if ($userInfo) {
 
     </head>
     <body>
+        <div class="checkout-wrap">
+            <ul class="checkout-bar">
 
+                <li class="first visited">Choose payment method</li>
+
+                <li class="active">Process Transaction</li>
+
+                <li class="next">Payment Complete</li>
+
+            </ul>
+        </div>
     </body>
 </html>
 
