@@ -1,5 +1,20 @@
 <?php
 
+require '../../vendor/autoload.php';
+
+// /* Connect to the database */
+// $dbConnection = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUsername, $dbPassword);
+// $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
+
+// /* Perform Query */
+// $query = "INSERT INTO messages VALUES (:message)";
+// $statement = $dbConnection->prepare($query);
+// $message = "Start";
+// $statement->bindParam(":message", $message, PDO::PARAM_STR);
+// $statement->execute();
+
+
+
 // Set your secret key: remember to change this to your live secret key in production
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 \Stripe\Stripe::setApiKey($stripeSK);
@@ -12,6 +27,7 @@ $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
 $event = null;
 
 try {
+    
   $event = \Stripe\Webhook::constructEvent(
     $payload, $sig_header, $endpoint_secret
   );
@@ -25,6 +41,8 @@ try {
   exit();
 }
 
+
+
 // Handle the checkout.session.completed event
 if ($event->type == 'checkout.session.completed') {
   $session = $event->data->object;
@@ -34,7 +52,10 @@ if ($event->type == 'checkout.session.completed') {
 }
 
 function handle_checkout_session($session) {
-    $order_id = $session->client_reference_id;
+
+    require_once "../../php/configuration.php";
+
+    $order_id = intval($session->client_reference_id);
 
     /* Connect to the database */
     $dbConnection = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUsername, $dbPassword);
@@ -45,8 +66,6 @@ function handle_checkout_session($session) {
     $statement = $dbConnection->prepare($query);
     $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
     $statement->execute();
-
-
 
     if($statement->rowCount() > 0) {
         $query = "SELECT product_id, quantity FROM order_lines WHERE order_id = :order_id";
@@ -75,9 +94,41 @@ function handle_checkout_session($session) {
                     $statement->execute();
                 } else {
                     //Invalid item
-                    http_response_code(400);
+                    http_response_code(404);
                     exit();
                 }
+            }
+            $query = "UPDATE orders SET date_ordered = CURRENT_TIMESTAMP WHERE order_id = :order_id";
+            $statement = $dbConnection->prepare($query);
+            $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
+            $statement->execute();
+
+            $query = "SELECT user_id FROM orders WHERE order_id = :order_id";
+            $statement = $dbConnection->prepare($query);
+            $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
+            $statement->execute();
+            if($statement->rowCount() > 0) {
+                $result = $statement->fetch(PDO::FETCH_OBJ);
+                $user_id = $result->user_id;
+
+                $snowflake = new \Godruoyi\Snowflake\Snowflake;
+                $snowflake->setStartTimeStamp(strtotime('2019-11-11')*1000);
+
+                $order_id = $snowflake->id();
+
+                http_response_code(202);
+                $query = "INSERT INTO orders(order_id, user_id) VALUES (:order_id, :user_id)";
+                $statement = $dbConnection->prepare($query);
+                $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
+                $statement->bindParam(":user_id", $user_id, PDO::PARAM_STR);
+                $statement->execute();
+
+                http_response_code(200);
+                exit();
+            } else {
+                //Invalid order id?
+                http_response_code(404);
+                exit();
             }
         } else {
             //No items in order
@@ -86,12 +137,14 @@ function handle_checkout_session($session) {
         }
     } else {
         //Invalid order
-        http_response_code(400);
+        http_response_code(404);
         exit();
     }
+    http_response_code(200);
+    exit();
 }
 
 
-http_response_code(200);
+http_response_code(500);
 
 ?>

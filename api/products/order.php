@@ -8,7 +8,7 @@ use Auth0\SDK\Auth0;
 
 \Firebase\JWT\JWT::$leeway = 60;
 $snowflake = new \Godruoyi\Snowflake\Snowflake;
-$snowflake->setStartTimeStamp(1000);
+$snowflake->setStartTimeStamp(strtotime('2019-11-11')*1000);
 
 
 $auth0 = new Auth0([
@@ -21,9 +21,10 @@ $auth0 = new Auth0([
     'persist_refresh_token' => true,
         ]);
 $userInfo = $auth0->getUser();
-if ($userInfo) {
-    $response = new stdClass();
 
+$response = new stdClass();
+
+if ($userInfo) {
     if (isset($_GET['product']) && isset($_GET['quantity'])) {
         $product_id = filter_input(INPUT_GET, "product", FILTER_SANITIZE_NUMBER_INT);
         $quantity = filter_input(INPUT_GET, "quantity", FILTER_SANITIZE_NUMBER_INT);
