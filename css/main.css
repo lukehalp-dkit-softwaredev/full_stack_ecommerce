@@ -4719,14 +4719,14 @@ label {
         color: #fff; }
 
 .order_details_table {
-  background: #e5ecee;
+  background: #0b7e4f;
   padding: 30px;
   margin-top: 75px; }
   @media (min-width: 767px) {
     .order_details_table {
       margin-top: 45px; } }
   .order_details_table h2 {
-    color: #ccc;
+    color: #30cf34;
     font-size: 18px;
     padding-bottom: 15px; }
   .order_details_table .table {
@@ -4739,17 +4739,17 @@ label {
     .order_details_table .table tbody tr td p {
       margin-bottom: 0px; }
     .order_details_table .table tbody tr td h5 {
-      color: #ccc;
+      color: #30cf34;
       margin-bottom: 0px; }
     .order_details_table .table tbody tr td h4 {
       font-size: 14px;
       text-transform: uppercase;
       margin-bottom: 0px;
-      color: #ccc; }
+      color: #30cf34; }
     .order_details_table .table tbody tr:last-child td {
       border-top: 1px solid #ddd; }
       .order_details_table .table tbody tr:last-child td p {
-        color: #ccc; }
+        color: #30cf34; }
 
 /* End Cart Area css
 ============================================================================================ */
