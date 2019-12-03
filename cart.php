@@ -1,3 +1,24 @@
+<?php
+require_once "./php/configuration.php";
+
+require 'vendor/autoload.php';
+\Firebase\JWT\JWT::$leeway = 60;
+
+use Auth0\SDK\Auth0;
+
+$auth0 = new Auth0([
+    'domain' => 'dev-44t0mog0.eu.auth0.com',
+    'client_id' => 'hzLwly8pSwfEEJPBcJXtd8HLLS6eO0ZC',
+    'client_secret' => 'oUbeVZiuepsh92ldnjHHPAuEaI2WDEjDUM7aXAN-vcONJlRZ9T5SrB-SQUwiA8Rr',
+    'redirect_uri' => $siteName . '/cart.php',
+    'persist_id_token' => true,
+    'persist_access_token' => true,
+    'persist_refresh_token' => true,
+        ]);
+$userInfo = $auth0->getUser();
+
+?>
+
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -48,16 +69,15 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav ml-auto">
-							<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+							<li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
 							<li class="nav-item submenu dropdown active">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Shop</a>
 								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
-									<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-									<li class="nav-item active"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
+									<li class="nav-item"><a class="nav-link" href="category.php">Shop Category</a></li>
+									<li class="nav-item"><a class="nav-link" href="checkout.html">[!] Product Checkout</a></li>
+									<li class="nav-item active"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
+									<li class="nav-item"><a class="nav-link" href="confirmation.html">[!] Confirmation</a></li>
 								</ul>
 							</li>
 							<li class="nav-item submenu dropdown">
@@ -77,7 +97,19 @@
 									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
 								</ul>
 							</li>
-							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                            <?php if (!$userInfo): ?>
+                                    <li class="nav-item"><a class="nav-link" href="api/users/login.php">Log In</a></li>
+                                <?php else: ?>
+                                    <li class="nav-item submenu dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                           aria-expanded="false"><?php echo $userInfo["nickname"] ?></a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item"><a class="nav-link" href="profile_settings.php">Settings</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="api/users/logout.php">Log out</a></li>
+                                        </ul>
+                                    </li>
+                                <?php endif ?>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>

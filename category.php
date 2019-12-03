@@ -16,7 +16,6 @@ $auth0 = new Auth0([
     'persist_refresh_token' => true,
         ]);
 $userInfo = $auth0->getUser();
-echo json_encode($userInfo);
 ?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -74,10 +73,9 @@ echo json_encode($userInfo);
                                        aria-expanded="false">Shop</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item active"><a class="nav-link" href="category.php">Shop Category</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="single-product.php">Product Details</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="checkout.html">[!] Product Checkout</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="confirmation.html">[!] Confirmation</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item submenu dropdown">
