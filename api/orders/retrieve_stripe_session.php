@@ -36,7 +36,7 @@ if ($userInfo) {
         if ($statement->rowCount() > 0) {
             $results = $statement->fetch(PDO::FETCH_OBJ);
             if ($results->user_id == $userInfo['sub']) {
-                echo json_encode($results);
+                echo json_encode($order_id);
                 exit();
             }
         }
