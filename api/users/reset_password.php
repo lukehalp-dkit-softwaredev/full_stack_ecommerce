@@ -1,8 +1,8 @@
 <?php
 
-require_once "configuration.php";
+require_once "../../php/configuration.php";
 
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
 \Firebase\JWT\JWT::$leeway = 60;
 
 use Auth0\SDK\Auth0;
@@ -16,7 +16,7 @@ $auth0 = new Auth0([
         ]);
 
 $userInfo = $auth0->getUser();
-
+$error = new stdClass();
 if ($userInfo) {
 
     $curl = curl_init();
@@ -35,16 +35,21 @@ if ($userInfo) {
         ),
     ));
 
-    $response = curl_exec($curl);
+    $response = new stdClass();
+    $response->msg = curl_exec($curl);
     $err = curl_error($curl);
 
     curl_close($curl);
 
     if ($err) {
-        echo "cURL Error #:" . $err;
+        $error->code = 404;
+        $error->msg = $err;
+        echo json_encode($error);
     } else {
-        echo $response;
+        echo json_encode($response);
     }
 } else {
-    header("location: " . $siteName);
+    $error->code = 401;
+    $error->msg = "User is not logged in, please login.";
+    echo json_encode($error);
 }

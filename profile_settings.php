@@ -155,15 +155,18 @@ if (!$userInfo) {
                         <div class="login_form_inner settings_form_inner">
                             <h1>Profile Settings</h1>
                             <img id="ag_profile_picture" alt="profile_image" src="<?php echo $userInfo["picture"]; ?>">
-                            <form class="row login_form" id="contactForm">
+                            <div class="row login_form" id="contactForm">
                                 <div class="col-md-12 form-group">
                                     <label for="nickname">Minecraft username:</label>
                                     <input type="text" class="form-control" id="nickname" name="nickname" minlength="3" maxlength="16" placeholder="<?php echo $userInfo["nickname"]; ?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Minecraft Username'">
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <button type="button" onclick="changeNickname()" class="primary-btn">Save</button>
+                                    <button type="button" onclick="changeNickname()" class="primary-btn">Change minecraft username</button>
                                 </div>
-                            </form>
+                                <div class="col-md-12 form-group">
+                                    <button type="button" onclick="resetPassword()" class="primary-btn">Reset Password</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -251,6 +254,7 @@ if (!$userInfo) {
         </footer>
         <!-- End footer Area -->
 
+        <div id="ag_user_message"></div>
 
         <script src="js/vendor/jquery-2.2.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"

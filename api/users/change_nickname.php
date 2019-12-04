@@ -22,6 +22,7 @@ $auth0 = new Auth0([
         ]);
 $userInfo = $auth0->getUser();
 
+
 $whole_response = new stdClass();
 $whole_response->apiVersion = "1.0";
 $error = new stdClass();
@@ -101,6 +102,8 @@ if ($userInfo) {
                             $statement->bindParam(":user_id", $userInfo["sub"], PDO::PARAM_STR);
                             $statement->execute();
 //                            $_SESSION['nickname'] = $minecraft_username;
+                            $userInfo['nickname'] = $minecraft_username;
+                            $auth0->setUser($userInfo);
                         } else {
                             //user is trying to set the same mc username that they already have.
                             $error->code = 403;
@@ -116,6 +119,8 @@ if ($userInfo) {
                         $statement->bindParam(":user_id", $userInfo["sub"], PDO::PARAM_STR);
                         $statement->execute();
 //                        $_SESSION['nickname'] = $minecraft_username;
+                        $userInfo['nickname'] = $minecraft_username;
+                        $auth0->setUser($userInfo);
                     }
                 }
             }
@@ -128,7 +133,7 @@ if ($userInfo) {
     $whole_response->error = $error;
 }
 //session here is session on that page but not on the category page (I don't think).
-echo json_encode($_SESSION);
+//echo json_encode($_SESSION);
 echo json_encode($whole_response);
 
 
