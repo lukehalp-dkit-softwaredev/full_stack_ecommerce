@@ -7,9 +7,9 @@ require 'vendor/autoload.php';
 use Auth0\SDK\Auth0;
 
 $auth0 = new Auth0([
-    'domain' => 'dev-44t0mog0.eu.auth0.com',
-    'client_id' => 'hzLwly8pSwfEEJPBcJXtd8HLLS6eO0ZC',
-    'client_secret' => 'oUbeVZiuepsh92ldnjHHPAuEaI2WDEjDUM7aXAN-vcONJlRZ9T5SrB-SQUwiA8Rr',
+    'domain' => $auth0_domain,
+    'client_id' => $auth0_client_id,
+    'client_secret' => $auth0_client_secret,
     'redirect_uri' => $siteName . '/category.php',
     'persist_id_token' => true,
     'persist_access_token' => true,
@@ -57,7 +57,7 @@ $userInfo = $auth0->getUser();
                 <nav class="navbar navbar-expand-lg navbar-light main_box">
                     <div class="container">
                         <!-- Brand and toggle get grouped for better mobile display -->
-                        <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
+                        <a class="navbar-brand logo_h" href="index.php"><img src="img/logo.png" alt=""></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="icon-bar"></span>
@@ -69,33 +69,13 @@ $userInfo = $auth0->getUser();
                             <ul class="nav navbar-nav menu_nav ml-auto">
                                 <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                                 <li class="nav-item submenu dropdown active">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                    <a href="category.php" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                        aria-expanded="false">Shop</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item active"><a class="nav-link" href="category.php">Shop Category</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="checkout.html">[!] Product Checkout</a></li>
                                         <li class="nav-item"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="confirmation.html">[!] Confirmation</a></li>
                                     </ul>
                                 </li>
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Blog</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Pages</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                                 <?php if (!$userInfo): ?>
                                     <li class="nav-item"><a class="nav-link" href="api/users/login.php">Log In</a></li>
                                 <?php else: ?>
@@ -110,7 +90,7 @@ $userInfo = $auth0->getUser();
                                 <?php endif ?>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+                                <li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag"></span></a></li>
                                 <li class="nav-item">
                                     <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
                                 </li>
@@ -136,7 +116,7 @@ $userInfo = $auth0->getUser();
             <div class="container">
                 <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
                     <div class="col-first">
-                        <h1>Shop Category page</h1>
+                        <h1>Shopping page</h1>
                         <nav class="d-flex align-items-center">
                             <a href="index.php">Home<span class="lnr lnr-arrow-right"></span></a>
                             <a href="category.php">Shop<span class="lnr lnr-arrow-right"></span></a>

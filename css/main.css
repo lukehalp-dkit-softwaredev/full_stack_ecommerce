@@ -1264,6 +1264,7 @@ h1, h2, h3, h4, h5, h6 {
       .banner-area .banner-content {
         padding-left: 0; } }
     .banner-area .banner-content h1 {
+      text-shadow: 2px 2px #000;
       font-size: 60px;
       line-height: 66px;
       font-weight: 700;
@@ -1321,7 +1322,8 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 100px; }
 
 .breadcrumb-banner {
-  padding: 90px 0 100px 0; }
+  padding: 90px 0 100px 0;
+  text-shadow: 2px 2px 5px #000; }
   .breadcrumb-banner h1 {
     font-weight: 600;
     color: #fff; }
@@ -4795,7 +4797,7 @@ label {
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.07);
   height: 100%;
   text-align: center;
-  padding-top: 115px; }
+  padding-top: 5%; }
   .login_form_inner h3 {
     color: #ccc;
     text-transform: uppercase;
