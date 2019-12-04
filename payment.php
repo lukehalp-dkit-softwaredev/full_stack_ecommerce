@@ -64,6 +64,7 @@ if ($userInfo) {
             foreach ($result as $row) {
                 $item = [
                     "name" => $row->name,
+                    "images" => [$siteName . "/img/products/" . $row->product_id . ".png"],
                     "description" => $row->description,
 //                $session_object->line_items->images = $row["products.description"];
                     "amount" => $row->unit_price * 100,
@@ -150,6 +151,7 @@ if ($userInfo) {
 
             </ul>
         </div>
+        <div id="ag_user_message"></div>
     </body>
 </html>
 

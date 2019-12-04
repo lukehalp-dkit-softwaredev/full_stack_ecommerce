@@ -7,11 +7,11 @@
 - in cart, fix quantity of order change
 - remove bottom half of cart page
 + single-product.php image url work
-- item pictures at stripe checkout
++ item pictures at stripe checkout
 + confirmation php navbar
 + add password reset link
 + fix minecraft username fully make it yes
-- confirmation.php add products dynamically
++ confirmation.php add products dynamically
 + confirmation.php navbar, link cconnections
 - extra for me -> changeState for ccategory
 + home page remove all and have button for shop now
@@ -20,6 +20,7 @@
 + navbar -> cart icon
 + navbar -> remove irrelevant
 - searchbar?
+- finish images for some of the items
 
 @INDEPENDENT
 auth0 -> authentication
