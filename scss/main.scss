@@ -105,24 +105,21 @@ ul.checkout-bar {
             text-align: center;
             text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
             top: 4px;
-            width: 35px;
-            z-index: 999;      
+            width: 35px; 
+            z-index: 2;
         }
         &.active {
             color: $primary-color;
             font-weight: bold;
             &:before {
                 background: $primary-color; 
-                z-index: 99999;
             }
         }
         &.visited {
             background: #ECECEC;
             color: $primary-color2;
-            z-index: 99999;
             &:before {
                 background: $primary-color2; 
-                z-index: 99999;
             }
         }
         &:nth-child(1) {
@@ -225,7 +222,7 @@ ul.checkout-bar {
                 position: absolute;
                 top: -65px;
                 width: 45px;
-                z-index: 99;
+                z-index: 2;
             }
             &.visited {
                 background: none;
@@ -238,7 +235,7 @@ ul.checkout-bar {
                     position: absolute;
                     top: -50px;
                     width: 100%;
-                    z-index: 99;
+                    z-index: 1;
                 }
             }
             &.final:after{

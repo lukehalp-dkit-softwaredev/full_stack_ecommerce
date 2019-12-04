@@ -32,7 +32,8 @@ if ($userInfo) {
         $error->code = 400;
         $error->msg = "No minecraft username supplied";
         $whole_response->error = $error;
-    } else {# Our new data
+    } else {
+# Our new data
         $data = array(
             $minecraft_username,
             'nonExistingPlayer'
@@ -86,41 +87,54 @@ if ($userInfo) {
                     $error->msg = "Failed to update minecraft username, possible problem connecting to the authentication provider";
                     $whole_response->error = $error;
                 } else {
-                    //username exists so check if the logged in user is in the db
-                    $query = "SELECT mc_username FROM users WHERE user_id = :user_id";
+                    //username exists
+                    $query = "SELECT mc_username FROM users WHERE mc_username = :mc_username AND user_id != :user_id";
                     $statement = $dbConnection->prepare($query);
+                    $statement->bindParam(":mc_username", $minecraft_username, PDO::PARAM_STR);
                     $statement->bindParam(":user_id", $userInfo["sub"], PDO::PARAM_STR);
                     $statement->execute();
                     if ($statement->rowCount() > 0) {
-                        //user exists so need to update
-                        $results = $statement->fetch(PDO::FETCH_OBJ);
-                        if (strcasecmp($results->mc_username, $response[0]->name)) {
-                            $query = "UPDATE users SET mc_username = :mc_username, mc_uuid = :mc_uuid WHERE user_id = :user_id";
+                        //username is taken by another user
+                        $error->code = 403;
+                        $error->msg = "Username is already taken by another user.";
+                        $whole_response->error = $error;
+                    } else {
+                        //username is not already taken
+                        $query = "SELECT mc_username FROM users WHERE user_id = :user_id";
+                        $statement = $dbConnection->prepare($query);
+                        $statement->bindParam(":user_id", $userInfo["sub"], PDO::PARAM_STR);
+                        $statement->execute();
+                        if ($statement->rowCount() > 0) {
+                            //user exists
+                            $results = $statement->fetch(PDO::FETCH_OBJ);
+                            if (strcasecmp($results->mc_username, $response[0]->name)) {
+                                $query = "UPDATE users SET mc_username = :mc_username, mc_uuid = :mc_uuid WHERE user_id = :user_id";
+                                $statement = $dbConnection->prepare($query);
+                                $statement->bindParam(":mc_username", $response[0]->name, PDO::PARAM_STR);
+                                $statement->bindParam(":mc_uuid", $response[0]->id, PDO::PARAM_STR);
+                                $statement->bindParam(":user_id", $userInfo["sub"], PDO::PARAM_STR);
+                                $statement->execute();
+//                            $_SESSION['nickname'] = $minecraft_username;
+                                $userInfo['nickname'] = $minecraft_username;
+                                $auth0->setUser($userInfo);
+                            } else {
+                                //user is trying to set the same mc username that they already have.
+                                $error->code = 403;
+                                $error->msg = "Trying to set the same minecraft username as already set.";
+                                $whole_response->error = $error;
+                            }
+                        } else {
+                            //user doesn't exist so need to add
+                            $query = "INSERT INTO users VALUES(:user_id, :mc_username, :mc_uuid)";
                             $statement = $dbConnection->prepare($query);
                             $statement->bindParam(":mc_username", $response[0]->name, PDO::PARAM_STR);
                             $statement->bindParam(":mc_uuid", $response[0]->id, PDO::PARAM_STR);
                             $statement->bindParam(":user_id", $userInfo["sub"], PDO::PARAM_STR);
                             $statement->execute();
-//                            $_SESSION['nickname'] = $minecraft_username;
+//                        $_SESSION['nickname'] = $minecraft_username;
                             $userInfo['nickname'] = $minecraft_username;
                             $auth0->setUser($userInfo);
-                        } else {
-                            //user is trying to set the same mc username that they already have.
-                            $error->code = 403;
-                            $error->msg = "Trying to set the same minecraft username as already set.";
-                            $whole_response->error = $error;
                         }
-                    } else {
-                        //user doesn't exist so need to add
-                        $query = "INSERT INTO users VALUES(:user_id, :mc_username, :mc_uuid)";
-                        $statement = $dbConnection->prepare($query);
-                        $statement->bindParam(":mc_username", $response[0]->name, PDO::PARAM_STR);
-                        $statement->bindParam(":mc_uuid", $response[0]->id, PDO::PARAM_STR);
-                        $statement->bindParam(":user_id", $userInfo["sub"], PDO::PARAM_STR);
-                        $statement->execute();
-//                        $_SESSION['nickname'] = $minecraft_username;
-                        $userInfo['nickname'] = $minecraft_username;
-                        $auth0->setUser($userInfo);
                     }
                 }
             }

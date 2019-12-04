@@ -5,9 +5,9 @@
     use Auth0\SDK\Auth0;
 
     $auth0 = new Auth0([
-        'domain' => 'dev-44t0mog0.eu.auth0.com',
-        'client_id' => 'hzLwly8pSwfEEJPBcJXtd8HLLS6eO0ZC',
-        'client_secret' => 'oUbeVZiuepsh92ldnjHHPAuEaI2WDEjDUM7aXAN-vcONJlRZ9T5SrB-SQUwiA8Rr',
+        'domain' => $auth0_domain,
+        'client_id' => $auth0_client_id,
+        'client_secret' => $auth0_client_secret,
         'redirect_uri' => $siteName . '/category.php',
         'persist_id_token' => true,
         'persist_access_token' => true,
@@ -25,7 +25,7 @@
         $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
 
         /* Perform Query */
-        $query = "SELECT order_id, user_id, date_created, date_ordered FROM orders WHERE order_id = :order_id";
+        $query = "SELECT o.order_id, o.user_id, u.mc_username, o.date_created, o.date_ordered FROM orders o, users u WHERE o.user_id = u.user_id AND o.order_id = :order_id";
         $statement = $dbConnection->prepare($query);
         $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
         $statement->execute();
@@ -39,7 +39,7 @@
 
             if($userInfo['sub'] == $result->user_id) {
                 /* Get items in order */
-                $query = "SELECT product_id, quantity FROM order_lines WHERE order_id = :order_id";
+                $query = "SELECT p.product_id, ol.quantity, p.name, p.unit_price, p.description FROM order_lines ol, products p WHERE ol.product_id = p.product_id AND order_id = :order_id";
                 $statement = $dbConnection->prepare($query);
                 $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
                 $statement->execute();
