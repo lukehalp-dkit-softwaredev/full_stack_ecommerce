@@ -7,16 +7,15 @@ require 'vendor/autoload.php';
 use Auth0\SDK\Auth0;
 
 $auth0 = new Auth0([
-    'domain' => 'dev-44t0mog0.eu.auth0.com',
-    'client_id' => 'hzLwly8pSwfEEJPBcJXtd8HLLS6eO0ZC',
-    'client_secret' => 'oUbeVZiuepsh92ldnjHHPAuEaI2WDEjDUM7aXAN-vcONJlRZ9T5SrB-SQUwiA8Rr',
+    'domain' => $auth0_domain,
+    'client_id' => $auth0_client_id,
+    'client_secret' => $auth0_client_secret,
     'redirect_uri' => $siteName . '/cart.php',
     'persist_id_token' => true,
     'persist_access_token' => true,
     'persist_refresh_token' => true,
         ]);
 $userInfo = $auth0->getUser();
-
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +35,7 @@ $userInfo = $auth0->getUser();
         <!-- meta character set -->
         <meta charset="UTF-8">
         <!-- Site Title -->
-        <title>Karma Shop</title>
+        <title>Just Another Minecraft Store CART</title>
 
         <!--
                 CSS
@@ -53,52 +52,32 @@ $userInfo = $auth0->getUser();
 
     <body>
 
-    <!-- Start Header Area -->
-	<header class="header_area sticky-header">
-		<div class="main_menu">
-			<nav class="navbar navbar-expand-lg navbar-light main_box">
-				<div class="container">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav menu_nav ml-auto">
-							<li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-							<li class="nav-item submenu dropdown active">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Shop</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="category.php">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="checkout.html">[!] Product Checkout</a></li>
-									<li class="nav-item active"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
-									<li class="nav-item"><a class="nav-link" href="confirmation.html">[!] Confirmation</a></li>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Blog</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Pages</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-									<li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-								</ul>
-							</li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                            <?php if (!$userInfo): ?>
+        <!-- Start Header Area -->
+        <header class="header_area sticky-header">
+            <div class="main_menu">
+                <nav class="navbar navbar-expand-lg navbar-light main_box">
+                    <div class="container">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <a class="navbar-brand logo_h" href="index.php"><img src="img/logo.png" alt=""></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                            <ul class="nav navbar-nav menu_nav ml-auto">
+                                <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                                <li class="nav-item submenu dropdown active">
+                                    <a href="category.php" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false">Shop</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item"><a class="nav-link" href="category.php">Shop Category</a></li>
+                                        <li class="nav-item active"><a class="nav-link" href="cart.php">Shopping Cart</a></li>
+                                    </ul>
+                                </li>
+                                <?php if (!$userInfo): ?>
                                     <li class="nav-item"><a class="nav-link" href="api/users/login.php">Log In</a></li>
                                 <?php else: ?>
                                     <li class="nav-item submenu dropdown">
@@ -110,28 +89,28 @@ $userInfo = $auth0->getUser();
                                         </ul>
                                     </li>
                                 <?php endif ?>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
-							<li class="nav-item">
-								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</div>
-		<div class="search_input" id="search_input_box">
-			<div class="container">
-				<form class="d-flex justify-content-between">
-					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
-					<button type="submit" class="btn"></button>
-					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
-				</form>
-			</div>
-		</div>
-	</header>
-	<!-- End Header Area -->
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag"></span></a></li>
+                                <li class="nav-item">
+                                    <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="search_input" id="search_input_box">
+                <div class="container">
+                    <form class="d-flex justify-content-between">
+                        <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+                        <button type="submit" class="btn"></button>
+                        <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <!-- End Header Area -->
 
         <!-- Start Banner Area -->
         <section class="banner-area organic-breadcrumb">
@@ -140,8 +119,9 @@ $userInfo = $auth0->getUser();
                     <div class="col-first">
                         <h1>Shopping Cart</h1>
                         <nav class="d-flex align-items-center">
-                            <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                            <a href="category.html">Cart</a>
+                            <a href="index.php">Home<span class="lnr lnr-arrow-right"></span></a>
+                            <a href="category.php">Shop<span class="lnr lnr-arrow-right"></span></a>
+                            <a href="cart.php">Cart</a>
                         </nav>
                     </div>
                 </div>
@@ -339,6 +319,8 @@ $userInfo = $auth0->getUser();
         </footer>
         <!-- End footer Area -->
 
+        <div id="ag_user_message"></div>
+        
         <script src="js/vendor/jquery-2.2.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
         crossorigin="anonymous"></script>

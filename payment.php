@@ -34,7 +34,7 @@ if ($userInfo) {
     $statement->execute();
     if ($statement->rowCount() > 0) {
         $result = $statement->fetch(PDO::FETCH_OBJ);
-        $order_id = $result->order_id;
+        $order_id = strval($result->order_id);
         $query = "SELECT order_lines.quantity, products.product_id, products.name, products.description, products.unit_price FROM order_lines, products WHERE order_id = :order_id AND order_lines.product_id = products.product_id";
         $statement = $dbConnection->prepare($query);
         $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
@@ -64,6 +64,7 @@ if ($userInfo) {
             foreach ($result as $row) {
                 $item = [
                     "name" => $row->name,
+                    "images" => [$siteName . "/img/products/" . $row->product_id . ".png"],
                     "description" => $row->description,
 //                $session_object->line_items->images = $row["products.description"];
                     "amount" => $row->unit_price * 100,
@@ -150,6 +151,7 @@ if ($userInfo) {
 
             </ul>
         </div>
+        <div id="ag_user_message"></div>
     </body>
 </html>
 

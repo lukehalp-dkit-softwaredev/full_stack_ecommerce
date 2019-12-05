@@ -31,7 +31,7 @@ async function displayProduct()
             let data = response.data;
 
             let id = data.product_id;
-            document.getElementById("order_button").addEventListener('click', function() {
+            document.getElementById("order_button").addEventListener('click', function () {
                 event.preventDefault();
                 orderProduct(id);
             });
@@ -43,7 +43,7 @@ async function displayProduct()
             let product_availability_container = document.getElementById("ag_single_product_availablity");
             let product_short_description_container = document.getElementById("ag_single_product_short_description");
             let product_long_description_container = document.getElementById("ag_product_description");
-            product_images_container.innerHTML = '<div class="single-prd-item"><img class="img-fluid ag_single_product_image" src="' + data.image_url + '" alt=""></div>';
+            product_images_container.innerHTML = '<div class="single-prd-item"><img class="img-fluid ag_single_product_image" src="img/products/' + data.product_id + '.png" alt=""></div>';
             product_title_container.innerHTML = data.product_title;
             product_price_container.innerHTML = "€" + data.unit_price;
             product_category_container.innerHTML = '<a class="active" href="#"><span>Category</span> : ' + data.category_name + '</a>';
@@ -72,7 +72,7 @@ async function orderProduct(id) {
     let product_id = id;
     let quantity = 0;
     quantity = document.getElementById('sst').value;
-    if(isNaN(quantity) || quantity < 1) {
+    if (isNaN(quantity) || quantity < 1) {
         showError("Quantity invalid!");
     }
     let call_url = "api/products/order.php?product=" + product_id + "&quantity=" + quantity;

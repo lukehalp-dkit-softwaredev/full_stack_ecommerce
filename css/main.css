@@ -1264,6 +1264,7 @@ h1, h2, h3, h4, h5, h6 {
       .banner-area .banner-content {
         padding-left: 0; } }
     .banner-area .banner-content h1 {
+      text-shadow: 2px 2px #000;
       font-size: 60px;
       line-height: 66px;
       font-weight: 700;
@@ -1321,7 +1322,8 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 100px; }
 
 .breadcrumb-banner {
-  padding: 90px 0 100px 0; }
+  padding: 90px 0 100px 0;
+  text-shadow: 2px 2px 5px #000; }
   .breadcrumb-banner h1 {
     font-weight: 600;
     color: #fff; }
@@ -4795,7 +4797,7 @@ label {
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.07);
   height: 100%;
   text-align: center;
-  padding-top: 115px; }
+  padding-top: 5%; }
   .login_form_inner h3 {
     color: #ccc;
     text-transform: uppercase;
@@ -5850,6 +5852,24 @@ label {
   -o-transition-duration: 0.5s, 0s;
   transition-duration: 0.5s, 0s; }
 
+#ag_user_message {
+  -webkit-transition-duration: 0.5s, 0s;
+  -moz-transition-duration: 0.5s, 0s;
+  -o-transition-duration: 0.5s, 0s;
+  transition-duration: 0.5s, 0s;
+  transform: scale(0);
+  opacity: 0;
+  position: fixed;
+  bottom: -20%;
+  left: 5%;
+  padding: 2%;
+  background-color: #3aa53d;
+  box-shadow: 0px 0px 9px -3px #000;
+  border-radius: 10px; }
+  #ag_user_message.show_nice {
+    bottom: 5%;
+    transform: scale(1); }
+
 .ag-active-category {
   color: #3aa53d !important; }
 
@@ -5900,20 +5920,17 @@ ul.checkout-bar {
       text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
       top: 4px;
       width: 35px;
-      z-index: 999; }
+      z-index: 2; }
     ul.checkout-bar li.active {
       color: #3aa53d;
       font-weight: bold; }
       ul.checkout-bar li.active:before {
-        background: #3aa53d;
-        z-index: 99999; }
+        background: #3aa53d; }
     ul.checkout-bar li.visited {
       background: #ECECEC;
-      color: #0b7e4f;
-      z-index: 99999; }
+      color: #0b7e4f; }
       ul.checkout-bar li.visited:before {
-        background: #0b7e4f;
-        z-index: 99999; }
+        background: #0b7e4f; }
     ul.checkout-bar li:nth-child(1):before {
       content: "1"; }
     ul.checkout-bar li:nth-child(2):before {
@@ -6005,7 +6022,7 @@ ul.checkout-bar {
         position: absolute;
         top: -65px;
         width: 45px;
-        z-index: 99; }
+        z-index: 2; }
       ul.checkout-bar li.visited {
         background: none; }
         ul.checkout-bar li.visited:after {
@@ -6021,7 +6038,7 @@ ul.checkout-bar {
           position: absolute;
           top: -50px;
           width: 100%;
-          z-index: 99; }
+          z-index: 1; }
       ul.checkout-bar li.final:after {
         width: 0%; } }
 .cart_image {

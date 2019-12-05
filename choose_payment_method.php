@@ -15,7 +15,7 @@ $auth0 = new Auth0([
     'domain' => $auth0_domain,
     'client_id' => $auth0_client_id,
     'client_secret' => $auth0_client_secret,
-    'redirect_uri' => $siteName . '/category.php',
+    'redirect_uri' => $siteName . '/cart.php',
     'persist_id_token' => true,
     'persist_access_token' => true,
     'persist_refresh_token' => true,
@@ -74,7 +74,7 @@ if ($userInfo) {
         <!-- meta character set -->
         <meta charset="UTF-8">
         <!-- Site Title -->
-        <title>Just Another Minecraft Store Choose Payment Method</title>
+        <title>Just Another Minecraft Store PAYMENT METHOD</title>
 
         <!--
             CSS
@@ -100,7 +100,7 @@ if ($userInfo) {
                 <nav class="navbar navbar-expand-lg navbar-light main_box">
                     <div class="container">
                         <!-- Brand and toggle get grouped for better mobile display -->
-                        <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
+                        <a class="navbar-brand logo_h" href="index.php"><img src="img/logo.png" alt=""></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="icon-bar"></span>
@@ -112,34 +112,13 @@ if ($userInfo) {
                             <ul class="nav navbar-nav menu_nav ml-auto">
                                 <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                                 <li class="nav-item submenu dropdown active">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                    <a href="category.php" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                        aria-expanded="false">Shop</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item"><a class="nav-link" href="category.php">Shop Category</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="single-product.php">Product Details</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
-                                        <li class="nav-item" active><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
+                                        <li class="nav-item" active><a class="nav-link" href="cart.php">Shopping Cart</a></li>
                                     </ul>
                                 </li>
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Blog</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Pages</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                                 <?php if (!$userInfo): ?>
                                     <li class="nav-item"><a class="nav-link" href="api/users/login.php">Log In</a></li>
                                 <?php else: ?>
@@ -154,7 +133,7 @@ if ($userInfo) {
                                 <?php endif ?>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+                                <li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag"></span></a></li>
                                 <li class="nav-item">
                                     <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
                                 </li>
@@ -204,6 +183,8 @@ if ($userInfo) {
 
             </div>
         </div>
+        
+        <div id="ag_user_message"></div>
         <script src="js/vendor/jquery-2.2.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
         crossorigin="anonymous"></script>
