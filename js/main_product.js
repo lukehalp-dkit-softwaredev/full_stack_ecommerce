@@ -93,7 +93,7 @@ async function orderProduct(id) {
 }
 
 function showSuccess(response) {
-    alert(`Added ${ response.data.quantity}x ${ response.data.name } to cart.`);
+    alert(`${ response.data.quantity }x ${ response.data.name } now in cart.`);
 }
 
 function showError(error) {

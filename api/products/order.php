@@ -54,33 +54,74 @@ if ($userInfo) {
                 if ($statement->rowCount() > 0) {
                     $result = $statement->fetch(PDO::FETCH_OBJ);
 
-                    /* Perform Query */
-                    $query = "INSERT INTO order_lines(order_id,product_id,quantity) VALUES (:order_id, :product_id, :quantity);";
+                    $query = "SELECT order_id, quantity FROM order_lines WHERE order_id = :order_id AND product_id = :product_id";
                     $statement = $dbConnection->prepare($query);
                     $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
                     $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
-                    $statement->bindParam(":quantity", $quantity, PDO::PARAM_INT);
                     $statement->execute();
 
                     if ($statement->rowCount() > 0) {
-                        $data = new stdClass();
-                        $data->product_id = $product_id;
-                        $data->quantity = $quantity;
-                        $data->name = $product_name;
+                        /* Item already in basket */
+                        $result = $statement->fetch(PDO::FETCH_OBJ);
+                        $quantity = $quantity + $result->quantity;
 
-                        $response->apiVersion = "1.0";
-                        $response->data = $data;
+                        $query = "UPDATE order_lines SET quantity = :quantity WHERE order_id = :order_id AND product_id = :product_id";
+                        $statement = $dbConnection->prepare($query);
+                        $statement->bindParam(":quantity", $quantity, PDO::PARAM_INT);
+                        $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
+                        $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
+                        $statement->execute();
+
+                        if ($statement->rowCount() > 0) {
+                            $data = new stdClass();
+                            $data->product_id = $product_id;
+                            $data->quantity = $quantity;
+                            $data->name = $product_name;
+
+                            $response->apiVersion = "1.0";
+                            $response->data = $data;
+                        } else {
+                            //Couldnt add product to basket
+                            $error = new stdClass();
+                            $error->code = 500;
+                            $error->msg = "Couldnt add item.";
+
+                            $response->apiVersion = "1.0";
+                            $response->error = $error;
+
+                            http_response_code(500);
+                        }
                     } else {
-                        //Couldnt add product to basket
-                        $error = new stdClass();
-                        $error->code = 500;
-                        $error->msg = "Couldnt add item.";
+                        /* New item in basket */
+                        $query = "INSERT INTO order_lines(order_id,product_id,quantity) VALUES (:order_id, :product_id, :quantity);";
+                        $statement = $dbConnection->prepare($query);
+                        $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
+                        $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
+                        $statement->bindParam(":quantity", $quantity, PDO::PARAM_INT);
+                        $statement->execute();
 
-                        $response->apiVersion = "1.0";
-                        $response->error = $error;
+                        if ($statement->rowCount() > 0) {
+                            $data = new stdClass();
+                            $data->product_id = $product_id;
+                            $data->quantity = $quantity;
+                            $data->name = $product_name;
 
-                        http_response_code(500);
+                            $response->apiVersion = "1.0";
+                            $response->data = $data;
+                        } else {
+                            //Couldnt add product to basket
+                            $error = new stdClass();
+                            $error->code = 500;
+                            $error->msg = "Couldnt add item.";
+
+                            $response->apiVersion = "1.0";
+                            $response->error = $error;
+
+                            http_response_code(500);
+                        }
                     }
+
+                    
                 } else {
                     // No basket found
                     $order_id = $snowflake->id();

@@ -1,11 +1,11 @@
 @TODO
 - on category.php add to bag to actually add to bag
 + message function into main.js to display (bootstrap) ->if added, failed etc
-- if already in cart, change quantity for order of item
++ if already in cart, change quantity for order of item
 - in cart, change quantity of order
 - in cart, add remove item button and actually remove it
 - in cart, fix quantity of order change
-- remove bottom half of cart page
++ remove bottom half of cart page
 + single-product.php image url work
 + item pictures at stripe checkout
 + confirmation php navbar
