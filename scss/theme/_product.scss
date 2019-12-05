@@ -336,13 +336,13 @@
             border: none;
             width: 100px;
             font-size: 14px;
-            color: $text-color;
+            color: $highlight-title-color;
             font-family: $primary-font;
             margin-top: 9px;
             padding-left: 3px;
             @include placeholder{
                 font-size: 14px;
-                color: $text-color;
+                color: $highlight-title-color;
                 font-family: $primary-font;
             }
         }
@@ -975,7 +975,7 @@
                         border-radius: 3px;
                         padding: 0px 40px;
                         display: inline-block;
-                        color: $title-color;
+                        color: $highlight-title-color;
                         text-transform: uppercase;
                         font-weight: 500;
                     }
@@ -992,7 +992,7 @@
                                 border: 1px solid #eeeeee;
                                 height: 40px;
                                 font-size: 14px;
-                                color: #cccccc;
+                                color: $highlight-title-color;
                                 font-family: $primary-font;
                                 font-weight: normal;
                                 margin-right: -3px;
@@ -1000,7 +1000,7 @@
                                 box-shadow: none;
                                 @include placeholder{
                                     font-size: 14px;
-                                    color: #cccccc;
+                                    color: $highlight-title-color;
                                     font-family: $primary-font;
                                     font-weight: normal;
                                 }
@@ -1142,7 +1142,7 @@
     border-radius: 3px;
     padding: 0px 40px;
     display: inline-block;
-    color: $title-color;
+    color: $highlight-title-color;
     text-transform: uppercase;
     font-weight: 500;
 }
