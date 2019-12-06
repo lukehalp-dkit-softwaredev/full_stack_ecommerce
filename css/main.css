@@ -3795,25 +3795,25 @@ label {
   border: none;
   width: 100px;
   font-size: 14px;
-  color: #fff;
+  color: #30cf34;
   font-family: "Roboto", sans-serif;
   margin-top: 9px;
   padding-left: 3px; }
   .p_filter_widgets .range_item input.placeholder {
     font-size: 14px;
-    color: #fff;
+    color: #30cf34;
     font-family: "Roboto", sans-serif; }
   .p_filter_widgets .range_item input:-moz-placeholder {
     font-size: 14px;
-    color: #fff;
+    color: #30cf34;
     font-family: "Roboto", sans-serif; }
   .p_filter_widgets .range_item input::-moz-placeholder {
     font-size: 14px;
-    color: #fff;
+    color: #30cf34;
     font-family: "Roboto", sans-serif; }
   .p_filter_widgets .range_item input::-webkit-input-placeholder {
     font-size: 14px;
-    color: #fff;
+    color: #30cf34;
     font-family: "Roboto", sans-serif; }
 
 .product_top_bar {
@@ -4283,7 +4283,7 @@ label {
   border-radius: 3px;
   padding: 0px 40px;
   display: inline-block;
-  color: #ccc;
+  color: #30cf34;
   text-transform: uppercase;
   font-weight: 500; }
 .cart_inner .table tbody tr.bottom_button td:last-child {
@@ -4297,7 +4297,7 @@ label {
     border: 1px solid #eeeeee;
     height: 40px;
     font-size: 14px;
-    color: #cccccc;
+    color: #30cf34;
     font-family: "Roboto", sans-serif;
     font-weight: normal;
     margin-right: -3px;
@@ -4305,22 +4305,22 @@ label {
     box-shadow: none; }
     .cart_inner .table tbody tr.bottom_button td .cupon_text input.placeholder {
       font-size: 14px;
-      color: #cccccc;
+      color: #30cf34;
       font-family: "Roboto", sans-serif;
       font-weight: normal; }
     .cart_inner .table tbody tr.bottom_button td .cupon_text input:-moz-placeholder {
       font-size: 14px;
-      color: #cccccc;
+      color: #30cf34;
       font-family: "Roboto", sans-serif;
       font-weight: normal; }
     .cart_inner .table tbody tr.bottom_button td .cupon_text input::-moz-placeholder {
       font-size: 14px;
-      color: #cccccc;
+      color: #30cf34;
       font-family: "Roboto", sans-serif;
       font-weight: normal; }
     .cart_inner .table tbody tr.bottom_button td .cupon_text input::-webkit-input-placeholder {
       font-size: 14px;
-      color: #cccccc;
+      color: #30cf34;
       font-family: "Roboto", sans-serif;
       font-weight: normal; }
   .cart_inner .table tbody tr.bottom_button td .cupon_text .primary-btn {
@@ -4421,7 +4421,7 @@ label {
   border-radius: 3px;
   padding: 0px 40px;
   display: inline-block;
-  color: #ccc;
+  color: #30cf34;
   text-transform: uppercase;
   font-weight: 500; }
 
