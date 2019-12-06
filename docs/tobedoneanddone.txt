@@ -20,7 +20,7 @@
 + navbar -> cart icon
 + navbar -> remove irrelevant
 - searchbar?
-- finish images for some of the items
++ finish images for some of the items
 
 @INDEPENDENT
 auth0 -> authentication
