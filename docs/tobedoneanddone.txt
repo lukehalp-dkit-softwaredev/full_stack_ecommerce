@@ -1,5 +1,5 @@
 @TODO
-- on category.php add to bag to actually add to bag
++ on category.php add to bag to actually add to bag
 + message function into main.js to display (bootstrap) ->if added, failed etc
 + if already in cart, change quantity for order of item
 - in cart, change quantity of order
