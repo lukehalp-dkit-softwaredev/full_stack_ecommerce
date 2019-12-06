@@ -84,7 +84,7 @@ if ($userInfo) {
                             //Couldnt add product to basket
                             $error = new stdClass();
                             $error->code = 500;
-                            $error->msg = "Couldnt add item.";
+                            $error->msg = "Unable to add product to basket.";
 
                             $response->apiVersion = "1.0";
                             $response->error = $error;
@@ -112,7 +112,7 @@ if ($userInfo) {
                             //Couldnt add product to basket
                             $error = new stdClass();
                             $error->code = 500;
-                            $error->msg = "Couldnt add item.";
+                            $error->msg = "Unable to add product to basket.";
 
                             $response->apiVersion = "1.0";
                             $response->error = $error;
@@ -151,7 +151,7 @@ if ($userInfo) {
                         //Couldnt add product to basket
                         $error = new stdClass();
                         $error->code = 500;
-                        $error->msg = "Couldnt add item.";
+                        $error->msg = "Unable to add the product to basket.";
 
                         $response->apiVersion = "1.0";
                         $response->error = $error;
@@ -163,7 +163,7 @@ if ($userInfo) {
                 // Invalid quantity
                 $error = new stdClass();
                 $error->code = 400;
-                $error->msg = "Malformed URL, please check url parameters and try again.";
+                $error->msg = "Invalid quantity specified";
 
                 $response->apiVersion = "1.0";
                 $response->error = $error;
@@ -177,7 +177,7 @@ if ($userInfo) {
         // Product id not in url
         $error = new stdClass();
         $error->code = 400;
-        $error->msg = "Malformed URL, please check url parameters and try again.";
+        $error->msg = "No product to be added.";
 
         $response->apiVersion = "1.0";
         $response->error = $error;
@@ -187,7 +187,7 @@ if ($userInfo) {
 } else { // Not logged in
     $error = new stdClass();
     $error->code = 403;
-    $error->msg = "Please log in.";
+    $error->msg = "You need to be logged in to add to cart.";
 
     $response->apiVersion = "1.0";
     $response->error = $error;
