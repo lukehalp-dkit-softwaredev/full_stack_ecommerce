@@ -71,7 +71,7 @@ async function displayProducts()
         {
             for (let i = 0; i < response.data.products.length; i++)
             {
-                product_string += '<!-- product --><div class="col-lg-4 col-md-6"><div class="single-product" style="opacity: 0" title="' + response.data.products[i].product_id + '"><img class="img-fluid" src="./img/products/' + response.data.products[i].product_id + '.png" alt=""><div class="product-details"><h6>' + response.data.products[i].name + '</h6><div class="price"><h6>' + response.data.products[i].unit_price + '€</h6></div><div class="prd-bottom"><a href="" class="social-info"><span class="ti-bag"></span><p class="hover-text">add to bag</p></a><a href="" class="social-info"><span class="lnr lnr-heart"></span><p class="hover-text">Wishlist</p></a><a href="" class="social-info"><span class="lnr lnr-sync"></span><p class="hover-text">compare</p></a><a href="" class="social-info"><span class="lnr lnr-move"></span><p class="hover-text">view more</p></a></div></div></div></div>';
+                product_string += '<!-- product --><div class="col-lg-4 col-md-6"><div class="single-product" style="opacity: 0" title="' + response.data.products[i].product_id + '"><img class="img-fluid" src="./img/products/' + response.data.products[i].product_id + '.png" alt=""><div class="product-details"><h6>' + response.data.products[i].name + '</h6><div class="price"><h6>' + response.data.products[i].unit_price + '€</h6></div><div class="prd-bottom"><a href="#" onclick="addToCart(' + response.data.products[i].product_id + ', 1)" class="social-info"><span class="ti-bag"></span><p class="hover-text">add to bag</p></a></div></div></div></div>';
                 // CUSTOM IMAGE URLS: product_string += '<!-- product --><div class="col-lg-4 col-md-6"><div class="single-product" style="opacity: 0" title="' + response.data.products[i].product_id + '"><img class="img-fluid" src="' + response.data.products[i].image_url + '" alt=""><div class="product-details"><h6>' + response.data.products[i].name + '</h6><div class="price"><h6>' + response.data.products[i].unit_price + '€</h6></div><div class="prd-bottom"><a href="" class="social-info"><span class="ti-bag"></span><p class="hover-text">add to bag</p></a><a href="" class="social-info"><span class="lnr lnr-heart"></span><p class="hover-text">Wishlist</p></a><a href="" class="social-info"><span class="lnr lnr-sync"></span><p class="hover-text">compare</p></a><a href="" class="social-info"><span class="lnr lnr-move"></span><p class="hover-text">view more</p></a></div></div></div></div>';
             }
             max_page = Math.ceil(response.data.prod_count.count / shop_products_per_page);
@@ -202,6 +202,9 @@ $(document).on("click", '.ag-page-selector-arrow', function (event) {
 $(document).on("click", '.single-product', function (event) {
     location.href = "single-product.php?product=" + this.title;
 });
+$(document).on("click", '.social-info', function (event) {
+    event.stopPropagation();
+});
 function goNewPage(pageNumber, saveState)
 {
     if (pageNumber >= 0 && pageNumber < max_page)
@@ -310,6 +313,36 @@ function categoryClick(clickedElement)
                 categories[i].classList.add("ag-active-category");
                 current_category_header_element.innerHTML = categories[i].innerHTML;
             }
+        }
+    }
+}
+
+
+async function addToCart(product_id, quantity)
+{
+    let call_url = "api/products/order.php?product=" + product_id + "&quantity=" + quantity;
+    try
+    {
+        const response = await fetch(call_url,
+                {
+                    method: "GET",
+                    headers: {'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+                });
+        updateWebpage(await response.json());
+    } catch (error)
+    {
+        console.log("Fetch failed: ", error);
+    }
+    /* use the fetched data to change the content of the webpage */
+    function updateWebpage(response)
+    {
+        console.log(response);
+        if (!response.error)
+        {
+            displayMessage(response.data.name + " has been succcesfully added to cart!", 2500);
+        } else
+        {
+            displayMessage(response.error.msg, 3000);
         }
     }
 }

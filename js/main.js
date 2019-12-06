@@ -540,10 +540,10 @@ $(document).ready(function () {
 });
 
 var timeout;
-function displayMessage(message, displayTime = 1000)
+function displayMessage(message, displayTime = 1500)
 {
-    clearTimeout(timeout);
     let message_element = document.getElementById("ag_user_message");
+    clearTimeout(timeout);
     message_element.innerHTML = message;
     message_element.classList.add("show_nice");
     timeout = setTimeout(function () {
