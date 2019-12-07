@@ -30,6 +30,19 @@
     opacity: 1 !important;
     @include transition-duration(.5s, 0s);
 }
+.ag_product_remove_cross
+{
+    margin:auto;
+    float: right;
+    font-size: 20px;
+    color: $white;
+    &:hover{
+        color: $primary-color;
+        cursor: pointer;
+        @include transition-duration(.5s, 0s);
+    }
+    @include transition-duration(.5s, 0s);
+}
 #ag_user_message
 {
     @include transition-duration(.5s, 0s);
@@ -255,5 +268,65 @@ ul.checkout-bar {
 
 .cart_image
 {
-    width:25%;
+    width: 30%;
+    &:hover{
+        border-color: $primary-color !important;
+        cursor: pointer;
+        @include transition-duration(.5s, 0s);
+    }
+    @include transition-duration(.5s, 0s);
+}
+#clear_cart_button2
+{
+    display: none;
+}
+.ag_mobile_display
+{
+    display:none;
+}
+@media (max-width:575.98px)
+{
+    .cart_image
+    {
+        width:60px;
+        height:60px;
+    }
+    .cart_inner .product_name
+    {
+        margin-left: 5px;
+    }
+    .checkout_btn_inner
+    {
+        display:none !important;
+    }
+    .ag_mobile_display,
+    #update_cart_button,
+    #clear_cart_button2
+    {
+        display: block;
+    }
+    #clear_cart_button
+    {
+        display: none;
+    }
+    .cart_area div.container
+    {
+        padding-left:0;
+    }
+    .cart_area .cart_inner .table
+    {
+        .out_button_area .genric-btn
+        {
+            font-size:18px;
+            &:hover{
+                transform: scale(.9);
+            }
+        }
+        tr th:nth-child(2),
+            tr th:nth-child(3),
+            tr td:nth-child(2),
+            tr td:nth-child(3){
+            display:none;
+        }
+    }
 }

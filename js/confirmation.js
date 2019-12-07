@@ -71,12 +71,12 @@ async function getOrderId()
                 {
                     var item = response.data.items[i];
                     var price = item.unit_price * item.quantity;
-                    total = price;
-                    html_string += "<tr><td><p>" + item.name + "</p></td><td><h5>x " + item.quantity + "</h5></td><td><p>€" + price + "</p></td></tr>";
+                    total += price;
+                    html_string += "<tr><td><p>" + item.name + "</p></td><td><h5>x " + item.quantity + "</h5></td><td><p>€" + price.toFixed(2) + "</p></td></tr>";
                 }
-                html_string += "<tr><td><p>Total</p></td><td></td><td><p>€" + total + "</p></td></tr>";
+                html_string += "<tr><td><p>Total</p></td><td></td><td><p>€" + total.toFixed(2) + "</p></td></tr>";
                 products_element.innerHTML = html_string;
-                order_info_element.innerHTML += '<li><a href="#"><span>Total</span> : EUR ' + total + '</a></li>';
+                order_info_element.innerHTML += '<li><a href="#"><span>Total</span> : EUR ' + total.toFixed(2) + '</a></li>';
             }
         }
     }

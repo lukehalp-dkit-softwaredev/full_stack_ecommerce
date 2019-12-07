@@ -48,15 +48,17 @@ if ($userInfo) {
             $error->code = 404;
             $error->msg = "Order empty";
             $response->error = $error;
+            header("location: cart.php");
         }
     } else {
         //order_id not found
         $error->code = 404;
         $error->msg = "Order not found";
         $response->error = $error;
+        header("location: cart.php");
     }
 } else {
-    header("location: api/login.php");
+    header("location: api/users/login.php");
 }
 ?>
 
@@ -175,7 +177,7 @@ if ($userInfo) {
                     </div>
                     <div class="row">
                         <div class="col-6 ag_payment_method">
-                            <button class="genric-btn primary e-large">Paypal</button>
+                            <button class="genric-btn disable_page_button primary e-large">Paypal (unavailable)</button>
                             <!-- PayPal Logo --><table border="0" cellpadding="10" cellspacing="0" align="center"><tr><td align="center"></td></tr><tr><td align="center"><a href="#" title="How PayPal Works" onclick="javascript:window.open('https://www.paypal.com/webapps/mpp/paypal-popup', 'WIPaypal', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700');"><img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" border="0" alt="PayPal Acceptance Mark"></a></td></tr></table><!-- PayPal Logo -->
                         </div>
                         <div class="col-6 ag_payment_method">
@@ -186,7 +188,7 @@ if ($userInfo) {
 
             </div>
         </div>
-        
+
         <div id="ag_user_message"></div>
         <script src="js/vendor/jquery-2.2.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"

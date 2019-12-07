@@ -19,7 +19,7 @@ $auth0 = new Auth0([
         ]);
 $userInfo = $auth0->getUser();
 if (!$userInfo) {
-    header("location: " . $siteName);
+    header("location: " . $siteName."/api/users/login.php");
 }
 ?>
 <!DOCTYPE html>

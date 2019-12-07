@@ -42,7 +42,7 @@ if ($userInfo) {
             $result = $statement->fetch(PDO::FETCH_OBJ);
             $product_name = $result->name;
             $stock = $result->stock;
-            if ($quantity >= 0 && (($result->stock == -1 && $quantity < 999) || $quantity < $stock)) {
+            if ($quantity >= 0 && (($result->stock == -1 && $quantity < 999) || $quantity <= $stock)) {
                 $user_id = $userInfo['sub'];
 
 

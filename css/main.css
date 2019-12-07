@@ -4222,6 +4222,8 @@ label {
   padding-top: 100px;
   padding-bottom: 100px; }
 
+.cart_inner .product_name {
+  margin: auto; }
 .cart_inner .table thead tr th {
   border-top: 0px;
   font-size: 14px;
@@ -5856,6 +5858,23 @@ label {
   -o-transition-duration: 0.5s, 0s;
   transition-duration: 0.5s, 0s; }
 
+.ag_product_remove_cross {
+  margin: auto;
+  float: right;
+  font-size: 20px;
+  color: #fff;
+  -webkit-transition-duration: 0.5s, 0s;
+  -moz-transition-duration: 0.5s, 0s;
+  -o-transition-duration: 0.5s, 0s;
+  transition-duration: 0.5s, 0s; }
+  .ag_product_remove_cross:hover {
+    color: #3aa53d;
+    cursor: pointer;
+    -webkit-transition-duration: 0.5s, 0s;
+    -moz-transition-duration: 0.5s, 0s;
+    -o-transition-duration: 0.5s, 0s;
+    transition-duration: 0.5s, 0s; }
+
 #ag_user_message {
   -webkit-transition-duration: 0.5s, 0s;
   -moz-transition-duration: 0.5s, 0s;
@@ -6047,6 +6066,55 @@ ul.checkout-bar {
       ul.checkout-bar li.final:after {
         width: 0%; } }
 .cart_image {
-  width: 25%; }
+  width: 30%;
+  -webkit-transition-duration: 0.5s, 0s;
+  -moz-transition-duration: 0.5s, 0s;
+  -o-transition-duration: 0.5s, 0s;
+  transition-duration: 0.5s, 0s; }
+  .cart_image:hover {
+    border-color: #3aa53d !important;
+    cursor: pointer;
+    -webkit-transition-duration: 0.5s, 0s;
+    -moz-transition-duration: 0.5s, 0s;
+    -o-transition-duration: 0.5s, 0s;
+    transition-duration: 0.5s, 0s; }
+
+#clear_cart_button2 {
+  display: none; }
+
+.ag_mobile_display {
+  display: none; }
+
+@media (max-width: 575.98px) {
+  .cart_image {
+    width: 60px;
+    height: 60px; }
+
+  .cart_inner .product_name {
+    margin-left: 5px; }
+
+  .checkout_btn_inner {
+    display: none !important; }
+
+  .ag_mobile_display,
+  #update_cart_button,
+  #clear_cart_button2 {
+    display: block; }
+
+  #clear_cart_button {
+    display: none; }
+
+  .cart_area div.container {
+    padding-left: 0; }
+
+  .cart_area .cart_inner .table .out_button_area .genric-btn {
+    font-size: 18px; }
+    .cart_area .cart_inner .table .out_button_area .genric-btn:hover {
+      transform: scale(0.9); }
+  .cart_area .cart_inner .table tr th:nth-child(2),
+  .cart_area .cart_inner .table tr th:nth-child(3),
+  .cart_area .cart_inner .table tr td:nth-child(2),
+  .cart_area .cart_inner .table tr td:nth-child(3) {
+    display: none; } }
 
 /*# sourceMappingURL=main.css.map */
