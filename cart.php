@@ -18,16 +18,6 @@ $auth0 = new Auth0([
     'persist_refresh_token' => true,
         ]);
 $userInfo = $auth0->getUser();
-
-if(isset($_SESSION['error'])) {
-    //TODO: Show error message
-    /*
-        $error->code = 500;
-        $error->msg = "Order quantity ".$row->quantity."greater than stock ".$row->stock."for item ".$row->name;
-        $response->error = $error;
-        $response->apiVersion = "1.0";
-    */
-}
 ?>
 
 <!DOCTYPE html>
@@ -159,20 +149,15 @@ if(isset($_SESSION['error'])) {
 
                                 <tr class="bottom_button">
                                     <td>
-                                        <a class="gray_btn" href="#">Update Cart</a>
+                                        <a class="genric-btn primary-border e-large" style="font-size:1.2em;" onclick='updateCart()' href="#">Update Cart</a>
                                     </td>
                                     <td>
-
                                     </td>
                                     <td>
-
+                                        <h5 class='placeholder'>Total</h5>
                                     </td>
                                     <td>
-                                        <div class="cupon_text d-flex align-items-center">
-                                            <input type="text" placeholder="Coupon Code">
-                                            <a class="primary-btn" href="#">Apply</a>
-                                            <a class="gray_btn" href="#">Close Coupon</a>
-                                        </div>
+                                        <h5 class='placeholder'>€<span>000000.00</span></h5>
                                     </td>
                                 </tr>
                                 <tr>
@@ -183,10 +168,10 @@ if(isset($_SESSION['error'])) {
 
                                     </td>
                                     <td>
-                                        <h5>Subtotal</h5>
+                                        <h5>Total</h5>
                                     </td>
                                     <td>
-                                        <h5 id="total_price">$0000.00</h5>
+                                        <h5>€<span id="total_price">0000.00</span></h5>
                                     </td>
                                 </tr>
                                 <tr class="out_button_area">
@@ -298,7 +283,7 @@ if(isset($_SESSION['error'])) {
         <!-- End footer Area -->
 
         <div id="ag_user_message"></div>
-        
+
         <script src="js/vendor/jquery-2.2.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
         crossorigin="anonymous"></script>
@@ -314,6 +299,21 @@ if(isset($_SESSION['error'])) {
         <script src="js/gmaps.min.js"></script>
         <script src="js/main.js"></script>
         <script src="js/cart.js"></script>
+        <script>
+<?php
+if (isset($_SESSION['error'])) {
+    //TODO: Show error message
+    /*
+      $error->code = 500;
+      $error->msg = "Order quantity ".$row->quantity."greater than stock ".$row->stock."for item ".$row->name;
+      $response->error = $error;
+      $response->apiVersion = "1.0";
+     */
+    echo "displayMessage('" . $_SESSION['error']->error->msg . "', 5000);";
+    unset($_SESSION['error']);
+}
+?>
+        </script>
     </body>
 
 </html>
