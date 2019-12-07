@@ -88,17 +88,23 @@ if ($userInfo) {
         } else {
             //order line empty???
             $error->code = 404;
-            $error->msg = "Order empty";
+            $error->msg = "Your order is empty!";
             $response->error = $error;
+            $response->apiVersion = "1.0";
+            $_SESSION['error'] = $response;
+            header("location: cart.php");
         }
     } else {
         //order_id not found
         $error->code = 404;
-        $error->msg = "Order not found";
+        $error->msg = "Your order cannot be found :(";
         $response->error = $error;
+        $response->apiVersion = "1.0";
+        $_SESSION['error'] = $response;
+        header("location: cart.php");
     }
 } else {
-    header("location: api/login.php");
+    header("location: api/users/login.php");
 }
 ?>
 

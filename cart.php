@@ -149,12 +149,14 @@ $userInfo = $auth0->getUser();
 
                                 <tr class="bottom_button">
                                     <td>
-                                        <a class="genric-btn primary-border e-large" style="font-size:1.2em;" onclick='updateCart()' href="#">Update Cart</a>
+                                        <a id="update_cart_button" class="genric-btn primary-border e-large" style="font-size:1.2em;" onclick='updateCart()' href="#">Update</a>
+                                        <a id="clear_cart_button2" class="genric-btn primary-border e-large" style="font-size:1.2em;" onclick='clearCart()' href="#">Clear</a>
                                     </td>
                                     <td>
                                     </td>
                                     <td>
-                                        <h5 class='placeholder'>Total</h5>
+                                        <!--<h5 class='placeholder'>Total</h5>-->
+                                        <a id="clear_cart_button" class="genric-btn primary-border e-large" style="font-size:1.2em;" onclick='clearCart()' href="#">Clear</a>
                                     </td>
                                     <td>
                                         <h5 class='placeholder'>€<span>000000.00</span></h5>
@@ -162,13 +164,13 @@ $userInfo = $auth0->getUser();
                                 </tr>
                                 <tr>
                                     <td>
-
+                                        <h5 class="ag_mobile_display">Total:</h5>
                                     </td>
                                     <td>
 
                                     </td>
                                     <td>
-                                        <h5>Total</h5>
+                                        <h5>Total:</h5>
                                     </td>
                                     <td>
                                         <h5>€<span id="total_price">0000.00</span></h5>
@@ -177,6 +179,8 @@ $userInfo = $auth0->getUser();
                                 <tr class="out_button_area">
                                     <td>
 
+                                        <a class="genric-btn primary-border e-large ag_mobile_display" href="category.php">Continue Shopping</a>
+                                        <a id="checkout_button" onclick="location.href = 'choose_payment_method.php'" class="checkout_button genric-btn primary e-large ag_mobile_display" href="#">Proceed to checkout</a>
                                     </td>
                                     <td>
 
@@ -187,7 +191,7 @@ $userInfo = $auth0->getUser();
                                     <td>
                                         <div class="checkout_btn_inner d-flex align-items-center">
                                             <a class="gray_btn" href="category.php">Continue Shopping</a>
-                                            <a onclick="location.href = 'choose_payment_method.php'" class="primary-btn" href="#">Proceed to checkout</a>
+                                            <a id="checkout_button" onclick="location.href = 'choose_payment_method.php'" class="checkout_button primary-btn" href="#">Proceed to checkout</a>
                                         </div>
                                     </td>
                                 </tr>
