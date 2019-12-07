@@ -65,9 +65,9 @@ if ($userInfo) {
               'currency' => 'eur',
               'quantity' => 1, */
             foreach ($result as $row) {
-                if($row->quantity > $row->stock) {
+                if ($row->quantity > $row->stock && $row->stock != -1) {
                     $error->code = 500;
-                    $error->msg = "Order quantity ".$row->quantity."greater than stock ".$row->stock."for item ".$row->name;
+                    $error->msg = "Order quantity " . $row->quantity . " greater than stock " . $row->stock . " for item " . $row->name;
                     $response->error = $error;
                     $response->apiVersion = "1.0";
                     $_SESSION['error'] = $response;

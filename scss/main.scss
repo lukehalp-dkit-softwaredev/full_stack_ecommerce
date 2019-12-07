@@ -17,6 +17,10 @@
 @import "theme/contact";
 @import "theme/footer";
 
+.placeholder
+{
+    visibility: hidden;
+}
 #product_list
 {
     @include transition-duration(.5s, 0s);

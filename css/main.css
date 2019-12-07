@@ -5840,6 +5840,9 @@ label {
   .footer-text i {
     color: #3aa53d; }
 
+.placeholder {
+  visibility: hidden; }
+
 #product_list {
   -webkit-transition-duration: 0.5s, 0s;
   -moz-transition-duration: 0.5s, 0s;

@@ -8,7 +8,7 @@ use Auth0\SDK\Auth0;
 
 \Firebase\JWT\JWT::$leeway = 60;
 $snowflake = new \Godruoyi\Snowflake\Snowflake;
-$snowflake->setStartTimeStamp(strtotime('2019-11-11')*1000);
+$snowflake->setStartTimeStamp(strtotime('2019-11-11') * 1000);
 
 
 $auth0 = new Auth0([
@@ -42,9 +42,9 @@ if ($userInfo) {
             $result = $statement->fetch(PDO::FETCH_OBJ);
             $product_name = $result->name;
             $stock = $result->stock;
-            if ($quantity > 0 && (($result->stock == -1 && $quantity < 999) || $quantity < $stock)) {
+            if ($quantity >= 0 && (($result->stock == -1 && $quantity < 999) || $quantity < $stock)) {
                 $user_id = $userInfo['sub'];
-                
+
 
                 /* Perform Query */
                 $query = "SELECT order_id FROM orders WHERE user_id = :user_id AND date_ordered IS NULL";
@@ -65,7 +65,8 @@ if ($userInfo) {
                         /* Item already in basket */
                         $result = $statement->fetch(PDO::FETCH_OBJ);
 
-                        if($quantity < 1) {
+                        if ($quantity < 1) {
+                            //item being removed since quantity 0 or less
                             $query = "DELETE FROM order_lines WHERE order_id = :order_id AND product_id = :product_id";
                             $statement = $dbConnection->prepare($query);
                             $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
@@ -80,55 +81,55 @@ if ($userInfo) {
                                 $response->apiVersion = "1.0";
                                 $response->data = $data;
                             } else {
-                                //Couldnt add product to basket
+                                //Couldn't remove item
                                 $error = new stdClass();
                                 $error->code = 500;
-                                $error->msg = "Couldnt add item.";
+                                $error->msg = "Item failed to remove";
 
                                 $response->apiVersion = "1.0";
                                 $response->error = $error;
 
                                 http_response_code(500);
                             }
-                        }
-
-                        if($quantity > $stock) {
+                        } else if ($quantity > $stock && $stock != -1) {
                             //Quantity too large
                             $error = new stdClass();
                             $error->code = 400;
-                            $error->msg = "Quantity greater than stock.";
+                            $error->msg = $product_name . " specified quantity is greater than current available stock.";
 
                             $response->apiVersion = "1.0";
                             $response->error = $error;
 
                             http_response_code(400);
-                        }
-
-                        $query = "UPDATE order_lines SET quantity = :quantity WHERE order_id = :order_id AND product_id = :product_id";
-                        $statement = $dbConnection->prepare($query);
-                        $statement->bindParam(":quantity", $quantity, PDO::PARAM_INT);
-                        $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
-                        $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
-                        $statement->execute();
-
-                        if ($statement->rowCount() > 0) {
-                            $data = new stdClass();
-                            $data->product_id = $product_id;
-                            $data->quantity = $quantity;
-                            $data->name = $product_name;
-
-                            $response->apiVersion = "1.0";
-                            $response->data = $data;
                         } else {
-                            //Couldnt add product to basket
-                            $error = new stdClass();
-                            $error->code = 500;
-                            $error->msg = "Couldnt add item.";
+                            //quantity ok
+                            $query = "UPDATE order_lines SET quantity = :quantity WHERE order_id = :order_id AND product_id = :product_id";
+                            $statement = $dbConnection->prepare($query);
+                            $statement->bindParam(":quantity", $quantity, PDO::PARAM_INT);
+                            $statement->bindParam(":order_id", $result->order_id, PDO::PARAM_INT);
+                            $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
+                            $statement->execute();
 
-                            $response->apiVersion = "1.0";
-                            $response->error = $error;
+                            if ($statement->rowCount() > 0) {
+                                //successfully updated
+                                $data = new stdClass();
+                                $data->product_id = $product_id;
+                                $data->quantity = $quantity;
+                                $data->name = $product_name;
 
-                            http_response_code(500);
+                                $response->apiVersion = "1.0";
+                                $response->data = $data;
+                            } else {
+                                //Couldn't modify quantity
+                                $error = new stdClass();
+                                $error->code = 500;
+                                $error->msg = "Couldn't modify quantity for product " . $product_name;
+
+                                $response->apiVersion = "1.0";
+                                $response->error = $error;
+
+                                http_response_code(500);
+                            }
                         }
                     } else {
                         /* New item in basket */
@@ -151,7 +152,7 @@ if ($userInfo) {
                             //Couldnt add product to basket
                             $error = new stdClass();
                             $error->code = 500;
-                            $error->msg = "Couldnt add item.";
+                            $error->msg = "Unable to add the product to basket";
 
                             $response->apiVersion = "1.0";
                             $response->error = $error;
@@ -159,8 +160,6 @@ if ($userInfo) {
                             http_response_code(500);
                         }
                     }
-
-                    
                 } else {
                     // No basket found
                     $order_id = $snowflake->id();
@@ -190,7 +189,7 @@ if ($userInfo) {
                         //Couldnt add product to basket
                         $error = new stdClass();
                         $error->code = 500;
-                        $error->msg = "Couldnt add item.";
+                        $error->msg = "Unable to add the product to basket";
 
                         $response->apiVersion = "1.0";
                         $response->error = $error;
@@ -199,10 +198,10 @@ if ($userInfo) {
                     }
                 }
             } else {
-                // Invalid quantity
+                // Invalid quantity e.g a float not an int?
                 $error = new stdClass();
                 $error->code = 400;
-                $error->msg = "Malformed URL, please check url parameters and try again.";
+                $error->msg = "Invalid product quantity specified for " . $product_name;
 
                 $response->apiVersion = "1.0";
                 $response->error = $error;
@@ -210,7 +209,7 @@ if ($userInfo) {
                 http_response_code(400);
             }
         } else {
-
+            
         }
     } else {
         // Product id not in url
