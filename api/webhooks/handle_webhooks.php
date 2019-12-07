@@ -20,7 +20,7 @@ require '../../vendor/autoload.php';
 \Stripe\Stripe::setApiKey($stripeSK);
 
 // You can find your endpoint's secret in your webhook settings
-$endpoint_secret = 'whsec_TGhoLNMGK6fNpzy6ORma8ZXhhKIm2NXC';
+$endpoint_secret = 'whsec_p2xb6rs94M0fkVwtWbWoOfzF9M4sfc19';
 
 $payload = @file_get_contents('php://input');
 $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
@@ -34,10 +34,12 @@ try {
 } catch(\UnexpectedValueException $e) {
   // Invalid payload
   http_response_code(400);
+  echo "Invalid payload.";
   exit();
 } catch(\Stripe\Exception\SignatureVerificationException $e) {
   // Invalid signature
   http_response_code(400);
+  echo "Invalid signature.";
   exit();
 }
 
@@ -101,6 +103,7 @@ function handle_checkout_session($session) {
                 } else {
                     //Invalid item
                     http_response_code(404);
+                    echo "Invalid item";
                     exit();
                 }
             }
@@ -133,16 +136,19 @@ function handle_checkout_session($session) {
             } else {
                 //Invalid order id?
                 http_response_code(404);
+                echo "Invalid order id";
                 exit();
             }
         } else {
             //No items in order
             http_response_code(400);
+            echo "No items in order";
             exit();
         }
     } else {
         //Invalid order
         http_response_code(404);
+        echo "Invalid order";
         exit();
     }
     http_response_code(200);
