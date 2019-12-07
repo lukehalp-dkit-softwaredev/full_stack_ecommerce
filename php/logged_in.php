@@ -31,20 +31,21 @@
     $statement = $dbConnection->prepare($query);
     $statement->bindParam(":user_id", $user_id, PDO::PARAM_INT);
     $statement->execute();
-
     if ($statement->rowCount() == 0) {
         $query = "INSERT INTO users(user_id) VALUES (:user_id)";
         $statement = $dbConnection->prepare($query);
         $statement->bindParam(":user_id", $user_id, PDO::PARAM_STR);
         $statement->execute();
-
-        $order_id = $snowflake->id();
-        echo $order_id;
-        $query = "INSERT INTO orders(order_id, user_id) VALUES (:order_id, :user_id);";
-        $statement = $dbConnection->prepare($query);
-        $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
-        $statement->bindParam(":user_id", $user_id, PDO::PARAM_STR);
-        $statement->execute();
+        
+    header('location: ' . $siteName . '/profile_settings.php');
+    die();
+//        $order_id = $snowflake->id();
+//        echo $order_id;
+//        $query = "INSERT INTO orders(order_id, user_id) VALUES (:order_id, :user_id);";
+//        $statement = $dbConnection->prepare($query);
+//        $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
+//        $statement->bindParam(":user_id", $user_id, PDO::PARAM_STR);
+//        $statement->execute();
     }
 
     header('Location: ' . $siteName . '/index.php');
