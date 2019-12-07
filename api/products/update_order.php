@@ -41,7 +41,8 @@ if ($userInfo) {
         if ($statement->rowCount() > 0) {
             $result = $statement->fetch(PDO::FETCH_OBJ);
             $product_name = $result->name;
-            if ($quantity > 0 && (($result->stock == -1 && $quantity < 999) || $quantity < $result-> stock)) {
+            $stock = $result->stock;
+            if ($quantity > 0 && (($result->stock == -1 && $quantity < 999) || $quantity < $stock)) {
                 $user_id = $userInfo['sub'];
                 
 
@@ -89,6 +90,18 @@ if ($userInfo) {
 
                                 http_response_code(500);
                             }
+                        }
+
+                        if($quantity > $stock) {
+                            //Quantity too large
+                            $error = new stdClass();
+                            $error->code = 400;
+                            $error->msg = "Quantity greater than stock.";
+
+                            $response->apiVersion = "1.0";
+                            $response->error = $error;
+
+                            http_response_code(400);
                         }
 
                         $query = "UPDATE order_lines SET quantity = :quantity WHERE order_id = :order_id AND product_id = :product_id";
