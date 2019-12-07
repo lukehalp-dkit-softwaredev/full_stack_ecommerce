@@ -1,5 +1,8 @@
 <?php
 require_once "php/configuration.php";
+
+session_start();
+
 /* Connect to the database */
 $dbConnection = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUsername, $dbPassword);
 $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
