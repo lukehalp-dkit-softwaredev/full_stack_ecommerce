@@ -70,8 +70,8 @@ if (!empty($category)) {
     $statement->bindParam(":category", $category, PDO::PARAM_INT);
 }
 
-$statement->bindParam(":pageStart", $pageStart, PDO::PARAM_INT);
-$statement->bindParam(":pageLimit", $pageLimit, PDO::PARAM_INT);
+$statement->bindParam(":pageStart", intval($pageStart), PDO::PARAM_INT);
+$statement->bindParam(":pageLimit", intval($pageLimit), PDO::PARAM_INT);
 $statement->execute();
 
 $response->apiVersion = "1.0";

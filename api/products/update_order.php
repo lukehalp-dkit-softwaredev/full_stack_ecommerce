@@ -33,7 +33,7 @@ if ($userInfo) {
         $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
 
         /* Perform Query */
-        $query = "SELECT name FROM products WHERE product_id = :product_id";
+        $query = "SELECT name, stock FROM products WHERE product_id = :product_id";
         $statement = $dbConnection->prepare($query);
         $statement->bindParam(":product_id", $product_id, PDO::PARAM_INT);
         $statement->execute();
@@ -41,7 +41,7 @@ if ($userInfo) {
         if ($statement->rowCount() > 0) {
             $result = $statement->fetch(PDO::FETCH_OBJ);
             $product_name = $result->name;
-            if ($quantity > 0) {
+            if ($quantity > 0 && (($result->stock == -1 && $quantity < 999) || $quantity < $result-> stock)) {
                 $user_id = $userInfo['sub'];
                 
 
