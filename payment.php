@@ -35,7 +35,7 @@ if ($userInfo) {
     if ($statement->rowCount() > 0) {
         $result = $statement->fetch(PDO::FETCH_OBJ);
         $order_id = strval($result->order_id);
-        $query = "SELECT order_lines.quantity, products.product_id, products.name, products.description, products.unit_price FROM order_lines, products WHERE order_id = :order_id AND order_lines.product_id = products.product_id";
+        $query = "SELECT order_lines.quantity, products.product_id, products.name, products.description, products.unit_price, products.stock FROM order_lines, products WHERE order_id = :order_id AND order_lines.product_id = products.product_id";
         $statement = $dbConnection->prepare($query);
         $statement->bindParam(":order_id", $order_id, PDO::PARAM_INT);
         $statement->execute();
@@ -62,6 +62,14 @@ if ($userInfo) {
               'currency' => 'eur',
               'quantity' => 1, */
             foreach ($result as $row) {
+                if($row->quantity > $row->stock) {
+                    $error->code = 500;
+                    $error->msg = "Order quantity greater than stock for item ".$row->name;
+                    $response->error = $error;
+                    $response->apiVersion = "1.0";
+                    $_SESSION['error'] = $response;
+                    header("location: cart.php");
+                }
                 $item = [
                     "name" => $row->name,
                     "images" => [$siteName . "/img/products/" . $row->product_id . ".png"],
