@@ -7,8 +7,8 @@ $localHostSiteFolderName = "ecommerce";
 
 $localhostDatabaseName = "fswd_Y2S1_project2db";
 $localHostDatabaseHostAddress = "localhost";
-$localHostDatabaseUserName = "root";
-$localHostDatabasePassword = "";
+$localHostDatabaseUserName = "D00219060";
+$localHostDatabasePassword = "abcdefg";
 
 // remotely hosted website and remotely hosted database       /* you will need to get the server details below from your host provider */
 $serverWebsiteName = "http://mysql02.comp.dkit.ie/D00218937"; /* use this address if hosting website on the college students' website server */

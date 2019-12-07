@@ -16,7 +16,7 @@
 - extra for me -> changeState for ccategory
 + home page remove all and have button for shop now
 - home page server information
--+ banners
++ banners
 + navbar -> cart icon
 + navbar -> remove irrelevant
 - searchbar?
