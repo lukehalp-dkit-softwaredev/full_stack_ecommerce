@@ -1,6 +1,8 @@
 <?php
 require_once "./php/configuration.php";
 
+session_start();
+
 require 'vendor/autoload.php';
 \Firebase\JWT\JWT::$leeway = 60;
 
@@ -20,10 +22,10 @@ $userInfo = $auth0->getUser();
 if(isset($_SESSION['error'])) {
     //TODO: Show error message
     /*
-    $error->code = 500;
-    $error->msg = "Order quantity greater than stock for item ".$row->name;
-    $response->error = $error;
-    $response->apiVersion = "1.0";
+        $error->code = 500;
+        $error->msg = "Order quantity ".$row->quantity."greater than stock ".$row->stock."for item ".$row->name;
+        $response->error = $error;
+        $response->apiVersion = "1.0";
     */
 }
 ?>

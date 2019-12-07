@@ -1,5 +1,8 @@
 <?php
 require_once "php/configuration.php";
+
+session_start();
+
 /* Connect to the database */
 $dbConnection = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUsername, $dbPassword);
 $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);   // set the PDO error mode to exception
@@ -64,7 +67,7 @@ if ($userInfo) {
             foreach ($result as $row) {
                 if($row->quantity > $row->stock) {
                     $error->code = 500;
-                    $error->msg = "Order quantity greater than stock for item ".$row->name;
+                    $error->msg = "Order quantity ".$row->quantity."greater than stock ".$row->stock."for item ".$row->name;
                     $response->error = $error;
                     $response->apiVersion = "1.0";
                     $_SESSION['error'] = $response;
