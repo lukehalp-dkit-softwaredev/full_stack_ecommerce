@@ -1,6 +1,4 @@
 window.onload = onWindowLoaded();
-let test;
-let test2;
 function onWindowLoaded()
 {
     getOrderId();
@@ -54,7 +52,6 @@ async function getOrderId()
             if (response.data)
             {
                 let html_string = "";
-                console.log(response);
                 order_id;
                 let order_info_element = document.getElementById("order_info");
                 //order information

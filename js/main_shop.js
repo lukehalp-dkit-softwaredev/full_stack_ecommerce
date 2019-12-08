@@ -1,8 +1,5 @@
 let max_page = 1;
 let url = new URL(window.location.href);
-let test;
-let test2;
-let test3;
 let nonLinearSlider = document.getElementById('price-range');
 window.onload = onWindowLoaded();
 function onWindowLoaded()
@@ -65,7 +62,6 @@ async function displayProducts()
     /* use the fetched data to change the content of the webpage */
     function updateWebpage(response)
     {
-        test = response;
         let product_string = "";
         if (response.data.products.length > 0 && response.data.products[0] !== false)
         {
@@ -171,7 +167,6 @@ async function displayCategories()
     /* use the fetched data to change the content of the webpage */
     function updateWebpage(response)
     {
-        test2 = response;
         let categories_string = "";
         let total_count = 0;
         if (response.data.categories.length > 0)
@@ -285,7 +280,6 @@ function loadNoUiSlider()
 
         function updatePriceSearch(values)
         {
-            test3 = values;
             let min_range = parseFloat(values[0]);
             let max_range = parseFloat(values[1]);
             setParams("minprice", min_range, "maxprice", max_range);
@@ -294,7 +288,6 @@ function loadNoUiSlider()
 }
 function categoryClick(clickedElement)
 {
-    console.log(clickedElement);
     var categories = document.getElementsByClassName("ag-category-item");
     var current_category_header_element = document.getElementById("current_category");
     for (let i = 0; i < categories.length; i++)

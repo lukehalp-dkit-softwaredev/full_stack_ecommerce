@@ -1,4 +1,3 @@
-let test;
 let url = new URL(window.location.href);
 window.onload = onWindowLoaded();
 function onWindowLoaded()
@@ -25,7 +24,6 @@ async function displayProduct()
     }
     function updateWebpage(response)
     {
-        test = response;
         if (response.data)
         {
             let data = response.data;
