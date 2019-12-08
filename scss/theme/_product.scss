@@ -182,6 +182,11 @@
         }
     }
 }
+
+#product_list
+{
+    @include transition-duration(.5s, 0s);
+}
 /* End Feature Product Area css
 ============================================================================================ */
 
@@ -463,12 +468,41 @@
 .most_p_withoutbox{
     padding-bottom: 120px;
 }
+.ag-active-category
+{
+    color:$primary-color !important;
+}
+.ag_payment_method_container
+{
+    text-align: center;
+    padding-top:1%;
+    .ag_payment_method_header
+    {
+        h2
+        {
+            width: 100%;
+            margin-bottom: 5%;
+        }
+    }
+    .ag_payment_method
+    {
+        table{
+            transform: scale(.6);
+        }
+        button{
+            height: 35%;
+            font-size: 110%;
+        }
+    }
+}
+
 
 /* End Product Sidebar Area css
 ============================================================================================ */
 
 /* Single Product Area css
 ============================================================================================ */
+
 .product_image_area{
     padding-top: 120px;
 
@@ -885,6 +919,84 @@
 
 /* Cart Area css
 ============================================================================================ */
+
+.cart_image
+{
+    width: 30%;
+    &:hover{
+        border-color: $primary-color !important;
+        cursor: pointer;
+        @include transition-duration(.5s, 0s);
+    }
+    @include transition-duration(.5s, 0s);
+}
+#clear_cart_button2
+{
+    display: none;
+}
+.ag_mobile_display
+{
+    display:none;
+}
+@media (max-width:575.98px)
+{
+    .cart_image
+    {
+        width:60px;
+        height:60px;
+    }
+    .cart_inner .product_name
+    {
+        margin-left: 5px;
+    }
+    .checkout_btn_inner
+    {
+        display:none !important;
+    }
+    .ag_mobile_display,
+    #update_cart_button,
+    #clear_cart_button2
+    {
+        display: block;
+    }
+    #clear_cart_button
+    {
+        display: none;
+    }
+    .cart_area div.container
+    {
+        padding-left:0;
+    }
+    .cart_area .cart_inner .table
+    {
+        .out_button_area .genric-btn
+        {
+            font-size:18px;
+            &:hover{
+                transform: scale(.9);
+            }
+        }
+        tr th:nth-child(2),
+            tr th:nth-child(3),
+            tr td:nth-child(2),
+            tr td:nth-child(3){
+            display:none;
+        }
+    }
+}
+.ag_product_remove_cross
+{
+    margin:auto;
+    float: right;
+    font-size: 20px;
+    color: $white;
+    &:hover{
+        color: $primary-color;
+        cursor: pointer;
+        @include transition-duration(.5s, 0s);
+    }
+    @include transition-duration(.5s, 0s);
+}
 .cart_area{
     padding-top: 100px;
     padding-bottom: 100px;

@@ -34,7 +34,6 @@ async function changeNickname()
     }
     function updateWebpage(response)
     {
-        console.log(response);
         if (!response.error)
         {
             let url = new URL(window.location.href);
@@ -42,7 +41,6 @@ async function changeNickname()
             window.location.href = url;
         } else
         {
-            console.log(response.error.msg);
             displayMessage(response.error.msg, 2000);
         }
     }
@@ -69,10 +67,8 @@ async function resetPassword()
     }
     function updateWebpage(response)
     {
-        console.log(response);
         if (!response.error)
         {
-            console.log(response.msg);
             displayMessage(response.msg, 2000);
         } else
         {
